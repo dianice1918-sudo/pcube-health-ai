@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>P-Cube Health AI | API Keys</title>
+    <meta
+      name="description"
+      content="Manage API keys for secure access to P-Cube Health AI services."
+    />
+    <meta
+      name="keywords"
+      content="P-Cube Health AI API keys, health API access, developer settings"
+    />
+    <meta name="author" content="P-Cube Health AI" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" href="pcube_logo.png" type="image/png" />
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body data-page="api_keys">
+    <main class="container">
+      <h1>API Keys</h1>
+      <section id="createKeySection">
+        <h2>Create API Key</h2>
+        <form id="createKeyForm">
+          <label for="keyName">Key name</label>
+          <input
+            id="keyName"
+            name="name"
+            placeholder="e.g. Local dev key"
+            required
+          />
+          <button id="createKeyBtn" type="submit">Create key</button>
+        </form>
+        <div id="createdKey" class="notice hidden"></div>
+      </section>
+
+      <section id="listKeysSection">
+        <h2>Existing Keys</h2>
+        <div id="keysList">Loading...</div>
+      </section>
+
+      <p>
+        Use the <strong>Use</strong> button to store the API key in localStorage
+        as <code>pcube_api_key</code> for local testing.
+      </p>
+    </main>
+
+    <script src="app.js"></script>
+    <script src="api_keys.js"></script>
+  </body>
+</html>

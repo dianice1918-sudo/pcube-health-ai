@@ -1,0 +1,8 @@
+INFO:     Started server process [22956]
+INFO:     Waiting for application startup.
+INFO:pcube:Starting PCUBE API environment=development version=1.0.0
+INFO:pcube:Running startup schema compatibility patches
+INFO:pcube:Background scheduler disabled by ENABLE_SCHEDULER
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:5513 (Press CTRL+C to quit)
+INFO:pcube:GET /healthz -> 200

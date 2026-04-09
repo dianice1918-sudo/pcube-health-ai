@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>P-Cube Health AI | Verify Code</title>
+    <meta
+      name="description"
+      content="Verify your login code to access the P-Cube Health AI platform securely."
+    />
+    <meta
+      name="keywords"
+      content="P-Cube Health AI verification, OTP login, secure code verification"
+    />
+    <meta name="author" content="P-Cube Health AI" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" href="pcube_logo.png" type="image/png" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body data-page="otp">
+    <header class="header" role="banner">
+      <div class="container header-inner">
+        <div class="logo-wrapper">
+          <a href="pcube.html" class="brand" aria-label="P-Cube Health AI home">
+            <img src="pcube_logo.png" alt="P-Cube Health AI logo" class="logo" />
+            <span class="site-name">P-Cube Health AI</span>
+          </a>
+        </div>
+
+        <button
+          class="nav-toggle"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M4 7h16M4 12h16M4 17h16"
+              stroke="#fff"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </button>
+
+        <nav
+          id="primary-navigation"
+          class="primary-nav"
+          role="navigation"
+          aria-label="Main"
+        >
+          <ul class="nav-links">
+            <li><a href="pcube.html" class="nav-link">Home</a></li>
+            <li><a href="login.html" class="nav-link">Login</a></li>
+            <li><a href="signup.html" class="nav-link">Sign up</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="container auth-section">
+        <div class="auth-shell auth-shell--compact">
+          <div class="auth-card">
+            <p class="auth-kicker">Verification</p>
+            <h1 class="auth-page-title">Complete your one-time verification</h1>
+            <p id="otpLead" class="auth-lead">
+              Enter the verification code we sent to your email to finish account setup.
+            </p>
+            <p id="otpDestinationLabel" class="otp-meta">
+              Verification code sent to your email.
+            </p>
+
+            <div id="otpPanel" class="otp-panel otp-ready">
+              <div class="field-group">
+                <label for="otpCodeInput">Verification code</label>
+                <input
+                  id="otpCodeInput"
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="one-time-code"
+                  pattern="[0-9]{4,8}"
+                  minlength="4"
+                  maxlength="8"
+                  placeholder="Enter code"
+                />
+                <p id="otpValidationHint" class="otp-hint">Enter a 4 to 8 digit code.</p>
+              </div>
+
+              <div class="inline">
+                <button id="verifyCodeBtn" class="btn redirect-action" type="button">
+                  <span class="redirect-label">Verify and continue</span>
+                  <span class="redirect-icon" aria-hidden="true"></span>
+                </button>
+                <button id="resendCodeBtn" class="btn btn-secondary" type="button">
+                  Resend code
+                </button>
+              </div>
+            </div>
+
+            <p class="switch-text">
+              <a id="otpBackLink" href="login.html">
+                <span class="redirect-label">Back to sign in</span>
+                <span class="redirect-icon" aria-hidden="true"></span>
+              </a>
+            </p>
+            <p id="authOut" class="auth-message">Enter your verification code to continue.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="login.js?v=20260409a"></script>
+  </body>
+</html>

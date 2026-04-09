@@ -1,0 +1,5 @@
+.env
+.env.production
+.env.production.*
+service-account.json
+*.firebase-adminsdk-*.json

@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medication AI Guidance | P-Cube Health AI</title>
+    <meta
+      name="description"
+      content="Generate safety-first medication guidance with supportive care ideas, possible medication options, interaction warnings, and follow-up advice."
+    />
+    <meta
+      name="keywords"
+      content="medication AI, medication safety guide, drug interaction warnings, supportive care advice, OTC guidance, P-Cube Health AI"
+    />
+    <meta name="author" content="P-Cube Health AI" />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
+    <meta name="theme-color" content="#2563eb" />
+    <meta property="og:site_name" content="P-Cube Health AI" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Medication AI Guidance | P-Cube Health AI"
+    />
+    <meta
+      property="og:description"
+      content="Review medication safety guidance, supportive care options, and interaction warnings in plain language."
+    />
+    <meta property="og:image" content="pcube_logo.png" />
+    <meta property="og:image:alt" content="P-Cube Health AI logo" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Medication AI Guidance | P-Cube Health AI"
+    />
+    <meta
+      name="twitter:description"
+      content="Get AI-assisted medication guidance with safety-first structure and practical follow-up advice."
+    />
+    <meta name="twitter:image" content="pcube_logo.png" />
+    <link rel="icon" href="pcube_logo.png" type="image/png" />
+    <link rel="stylesheet" href="style.css?v=20260323e" />
+    <style>
+      .tool-page {
+        padding-top: 120px;
+        padding-bottom: 80px;
+      }
+      .tool-hero {
+        text-align: center;
+        max-width: 880px;
+        margin: 0 auto 40px;
+      }
+      .tool-hero p {
+        margin: 0 auto 22px;
+        color: #3a5173;
+        max-width: 680px;
+      }
+      .tool-actions {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+      .tool-grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      }
+      .tool-card {
+        border-radius: 20px;
+        border: 1px solid #cfe1ff;
+        background: linear-gradient(
+          165deg,
+          rgba(255, 255, 255, 0.96),
+          rgba(239, 246, 255, 0.92)
+        );
+        box-shadow: 0 18px 40px rgba(30, 64, 175, 0.15);
+        padding: clamp(22px, 3vw, 30px);
+      }
+      .tool-card h2 {
+        margin-bottom: 12px;
+      }
+      .form-grid {
+        display: grid;
+        gap: 16px;
+      }
+      .field-group {
+        display: grid;
+        gap: 8px;
+      }
+      label {
+        font-weight: 600;
+        color: #1f3560;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        min-height: 46px;
+        border-radius: 12px;
+        border: 1.5px solid #b5d0ff;
+        padding: 10px 14px;
+        font: inherit;
+        background: #fff;
+        color: #0f172a;
+      }
+      textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+      .two-col {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      }
+      .status-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: rgba(59, 130, 246, 0.12);
+        color: #1e3a8a;
+        font-size: 0.86rem;
+        font-weight: 700;
+      }
+      .status-pill.error {
+        background: #fff1f2;
+        color: #9f1239;
+      }
+      .status-pill.success {
+        background: #ecfdf5;
+        color: #166534;
+      }
+      .status-pill.busy {
+        background: #eff6ff;
+        color: #1d4ed8;
+      }
+      .section-copy {
+        margin-bottom: 16px;
+        color: #4b5f80;
+      }
+      .med-list {
+        display: grid;
+        gap: 14px;
+        margin-top: 14px;
+      }
+      .med-item {
+        border-radius: 14px;
+        border: 1px solid #dbe6ff;
+        padding: 12px 14px;
+        background: #f8fbff;
+      }
+      .med-item h4 {
+        margin-bottom: 6px;
+      }
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .pill {
+        background: rgba(59, 130, 246, 0.12);
+        color: #1e3a8a;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+      .alert-box {
+        border-radius: 14px;
+        border: 1px solid #fecaca;
+        background: #fff1f2;
+        color: #9f1239;
+        padding: 12px 14px;
+        margin-top: 16px;
+        white-space: pre-line;
+      }
+      .checklist {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+      }
+      .checklist li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        color: #2d3f5f;
+      }
+      .checklist span {
+        font-weight: 700;
+        color: #2563eb;
+      }
+      .output-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+      }
+      .output-list li {
+        color: #2d3f5f;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid #dbe6ff;
+      }
+      .overview-box {
+        border-radius: 14px;
+        border: 1px solid #dbe6ff;
+        background: #f8fbff;
+        padding: 14px;
+        color: #29415f;
+        white-space: pre-line;
+      }
+      .disclaimer {
+        margin-top: 24px;
+        text-align: left;
+        font-size: 0.92rem;
+        color: #4b5f80;
+        white-space: pre-line;
+      }
+      @media (max-width: 960px) {
+        .tool-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header" role="banner">
+      <div class="container header-inner">
+        <a
+          class="brand"
+          href="pcube.html?v=20260323e"
+          data-target="pcube.html"
+          aria-label="P-Cube Health AI home"
+        >
+          <img src="pcube_logo.png" alt="P-Cube Health AI logo" class="logo" />
+          <span class="site-name">P-Cube Health AI</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="tool-page">
+      <section class="tool-hero container">
+        <h1>Medication Prescriber</h1>
+        <p>
+          Use the dedicated Medication AI to build a safety-first suggestion
+          plan with supportive care, medication ideas, interaction warnings,
+          and escalation guidance.
+        </p>
+        <div class="tool-actions">
+          <a
+            class="button primary"
+            href="checker.html?v=20260323e"
+            data-target="checker.html"
+            >Continue from Symptom Checker</a>
+          <a
+            class="button secondary"
+            href="dashboard.html?v=20260323e#servicesWorkspace"
+            data-target="dashboard.html#servicesWorkspace"
+            >Back to Dashboard</a>
+        </div>
+      </section>
+
+      <section class="container tool-grid">
+        <div class="tool-card">
+          <h2>Patient Summary</h2>
+          <p class="section-copy">
+            Capture the essentials, then let the Medication AI generate a
+            structured educational plan.
+          </p>
+          <form id="medicationPlanForm" class="form-grid">
+            <div class="field-group">
+              <label for="primary-complaint">Primary complaint</label>
+              <input
+                id="primary-complaint"
+                name="primary_complaint"
+                type="text"
+                placeholder="e.g., persistent cough, mild fever"
+                required
+              />
+            </div>
+            <div class="two-col">
+              <div class="field-group">
+                <label for="age-range">Age range</label>
+                <select id="age-range" name="age_range">
+                  <option>18-29</option>
+                  <option>30-44</option>
+                  <option>45-59</option>
+                  <option>60+</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="risk-level">Risk level</label>
+                <select id="risk-level" name="risk_level">
+                  <option>Low</option>
+                  <option>Moderate</option>
+                  <option>High</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-group">
+              <label for="allergies">Known allergies</label>
+              <input
+                id="allergies"
+                name="allergies"
+                type="text"
+                placeholder="e.g., penicillin, ibuprofen"
+              />
+            </div>
+            <div class="field-group">
+              <label for="current-meds">Current medications</label>
+              <input
+                id="current-meds"
+                name="current_medications"
+                type="text"
+                placeholder="e.g., lisinopril, vitamin D"
+              />
+            </div>
+            <div class="field-group">
+              <label for="additional-notes">Additional notes</label>
+              <textarea
+                id="additional-notes"
+                name="additional_notes"
+                placeholder="Pregnancy, kidney or liver issues, high blood pressure, symptom duration, fever reading, or anything else that should change medication safety."
+              ></textarea>
+            </div>
+            <button id="generatePlanBtn" class="button primary" type="submit">
+              Generate Medication AI Plan
+            </button>
+          </form>
+        </div>
+
+        <div class="tool-card">
+          <div class="status-row">
+            <h2>Medication AI Plan</h2>
+            <span id="planStatus" class="status-pill">Ready</span>
+          </div>
+          <p id="usageSummary" class="section-copy">
+            Fill in the patient summary to generate an educational medication
+            support plan.
+          </p>
+          <div class="med-list">
+            <div class="med-item">
+              <h4>Overview</h4>
+              <div id="overviewOut" class="overview-box">
+                Medication AI has not generated a plan yet.
+              </div>
+            </div>
+            <div class="med-item">
+              <h4>Supportive care</h4>
+              <ul id="supportiveCareOut" class="output-list">
+                <li>Hydration, rest, and symptom relief suggestions will appear here.</li>
+              </ul>
+            </div>
+            <div class="med-item">
+              <h4>Possible medication options</h4>
+              <ul id="medicationOptionsOut" class="output-list">
+                <li>Medication ideas and label-check reminders will appear here.</li>
+              </ul>
+            </div>
+          </div>
+          <div id="interactionOut" class="alert-box" role="alert">
+            Interaction and avoidance notes will appear here after the AI plan runs.
+          </div>
+          <h3>Follow-up and escalation</h3>
+          <ul id="followUpOut" class="checklist">
+            <li><span>1.</span> Follow-up timing and escalation guidance will appear here.</li>
+          </ul>
+          <p id="safetyNoteOut" class="disclaimer">
+            This tool provides educational guidance only and does not replace
+            professional medical judgment.
+          </p>
+        </div>
+      </section>
+    </main>
+    <script src="tool-redirect.js?v=20260323a"></script>
+    <script src="medication-prescriber.js?v=20260407a"></script>
+  </body>
+</html>

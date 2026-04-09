@@ -1,0 +1,4 @@
+INFO:     127.0.0.1:49302 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49304 - "POST /register HTTP/1.1" 200 OK
+Email send failed to otp.smoke.20260409001332@example.com: (534, b'5.7.9 Application-specific password required. For more information, go to\n5.7.9  https://support.google.com/mail/?p=InvalidSecondFactor ffacd0b85a97d-43d1e4e5890sm60517994f8f.31 - gsmtp')
+INFO:     127.0.0.1:49305 - "POST /login/request-code HTTP/1.1" 503 Service Unavailable

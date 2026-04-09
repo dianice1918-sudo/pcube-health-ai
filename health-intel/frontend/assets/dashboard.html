@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>P-Cube Health AI | Dashboard</title>
+    <meta
+      name="description"
+      content="Interactive health dashboard with risk, trends, chat, and live intel."
+    />
+    <meta
+      name="keywords"
+      content="health dashboard, wellness dashboard, live health intel, P-Cube Health AI"
+    />
+    <meta name="author" content="P-Cube Health AI" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" href="pcube_logo.png" type="image/png" />
+    <link rel="stylesheet" href="style.css?v=20260309c" />
+    <link rel="stylesheet" href="dashboard.css?v=20260323c" />
+  </head>
+  <body class="glow-surface dashboard-page">
+    <header class="header" role="banner">
+      <div class="container header-inner app-header">
+        <a class="brand" href="pcube.html" aria-label="P-Cube Health AI home">
+          <img src="pcube_logo.png" alt="P-Cube Health AI logo" class="logo" />
+          <span class="site-name">P-Cube Health AI</span>
+        </a>
+        <nav class="top-nav" aria-label="Workspace sections">
+          <a class="nav-item active" href="dashboard.html#interactiveDashboard"
+            >Dashboard</a
+>
+        </nav>
+        <div class="top-actions">
+          <div class="user-menu">
+            <button
+              id="userMenuBtn"
+              class="user-menu-trigger"
+              type="button"
+              aria-haspopup="menu"
+              aria-expanded="false"
+              aria-controls="userMenuPanel"
+              aria-label="Open user menu"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 12a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Zm0 2.25c-4.42 0-8 2.35-8 5.25 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 0-2.9-3.58-5.25-8-5.25Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+            <div id="userMenuPanel" class="user-menu-panel hidden" role="menu">
+              <label class="theme-control" aria-label="Theme mode">
+                <span class="theme-label">Theme</span>
+                <select
+                  class="theme-select"
+                  data-theme-control
+                  aria-label="Theme mode"
+                >
+                  <option value="system">Auto</option>
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                </select>
+              </label>
+              <a class="menu-link" href="location.html" role="menuitem"
+                >Account Settings</a
+              >
+              <button
+                id="openMobileGuideBtn"
+                class="menu-link"
+                type="button"
+                role="menuitem"
+              >
+                Install App
+              </button>
+              <button
+                id="logoutBtn"
+                class="menu-link danger"
+                type="button"
+                role="menuitem"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container app-shell">
+      <section class="welcome-grid">
+        <article class="welcome-card">
+          <h1 id="welcomeTitle" class="welcome-title glowing-header">
+            Welcome to P-Cube Health AI.
+          </h1>
+          <p id="welcomeSubtitle" class="welcome-subtitle">
+            Pick a service, open the workspace, and monitor your health insights
+            in real time.
+          </p>
+          <div class="inline">
+            <button id="enterDashboardBtn" class="button primary" type="button">
+              Sync My Dashboard
+            </button>
+            <button id="openWorkspaceTourBtn" class="button soft" type="button">
+              Quick Tour
+            </button>
+            <button
+              id="loadDashboardBtnHero"
+              class="button secondary"
+              type="button"
+            >
+              Refresh Summary
+            </button>
+          </div>
+          <div class="mini-kpis" style="margin-top: 14px">
+            <div class="mini-kpi">
+              <div class="label">Risk Snapshot</div>
+              <div id="heroRiskMini" class="value">--</div>
+            </div>
+            <div class="mini-kpi">
+              <div class="label">Forecast</div>
+              <div id="heroForecastMini" class="value">--</div>
+            </div>
+            <div class="mini-kpi">
+              <div class="label">Unread Alerts</div>
+              <div id="heroUnreadMini" class="value">--</div>
+            </div>
+          </div>
+        </article>
+      </section>
+      <div
+        id="quickModal"
+        class="quick-modal hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="quickModalTitle"
+      >
+        <div class="quick-modal-card">
+          <h3 id="quickModalTitle">Quick Input</h3>
+          <p id="quickModalHelp" class="quick-modal-help"></p>
+          <form id="quickModalForm">
+            <label class="modal-field">
+              <span>Details</span>
+              <textarea
+                id="quickModalText"
+                name="text"
+                rows="4"
+                placeholder="Describe the symptoms or paste lab text"
+              ></textarea>
+            </label>
+            <label class="modal-field modal-age hidden">
+              <span>Age (optional)</span>
+              <input id="quickModalAge" name="age" type="number" min="0" />
+            </label>
+            <label class="modal-field modal-file hidden">
+              <span>Attach file (optional)</span>
+              <input
+                id="quickModalFile"
+                name="file"
+                type="file"
+                accept="image/*,.pdf,.txt"
+              />
+            </label>
+            <div class="inline modal-actions">
+              <button id="quickModalCancel" type="button" class="button soft">
+                Cancel
+              </button>
+              <button
+                id="quickModalSubmit"
+                type="submit"
+                class="button primary"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <section id="servicesWorkspace" class="services-section">
+        <h2 class="section-title">Quick Tools</h2>
+        <p class="services-intro">
+          Free keeps everyday guidance easy to start. Pro unlocks higher-risk
+          support, deeper analysis, connected care, and export-ready reports.
+        </p>
+        <div
+          class="services-grid"
+          id="servicesGrid"
+          role="list"
+          aria-label="Quick tools"
+        >
+          <a
+            id="symptomCheckerBtn"
+            class="service-card"
+            href="checker.html?v=20260309b"
+            role="listitem"
+            aria-label="Symptom Checker: AI-powered symptom analysis"
+            data-service="symptom-checker"
+            data-target="checker.html"
+          >
+            <div class="service-icon" aria-hidden="true">🩺</div>
+            <div class="service-badges">
+              <span class="service-badge free">Free</span>
+              <span class="service-badge pro">Pro</span>
+            </div>
+            <div class="service-label">Symptom Checker</div>
+            <div class="service-sub">
+              Free: 5-10 guided checks each month with urgency guidance.
+            </div>
+            <p class="service-note">
+              Pro: unlimited checks, follow-up questions, and history-linked
+              reports with possible condition probabilities.
+            </p>
+          </a>
+
+          <a
+            id="stepCounterBtn"
+            class="service-card"
+            href="step-counter.html"
+            role="listitem"
+            aria-label="Step Counter: track steps using device sensors"
+            data-service="step-counter"
+            data-target="dashboard-integrations.html#stepCounterHub"
+          >
+            <div class="service-icon" aria-hidden="true">👣</div>
+            <div class="service-badges">
+              <span class="service-badge free">Free</span>
+              <span class="service-badge pro">Pro</span>
+            </div>
+            <div class="service-label">Step Counter (Walking)</div>
+            <div class="service-sub">
+              Free: unlimited walking tracking with daily and weekly views.
+            </div>
+            <p class="service-note">
+              Pro: pace analysis, custom goals, and deeper correlations with
+              the rest of your health data.
+            </p>
+          </a>
+
+          <a
+            id="nutritionMealBtn"
+            class="service-card"
+            href="nutrition-meal-suggestions.html?v=20260323e"
+            role="listitem"
+            aria-label="Nutrition and Meal Suggestions: log meals, calories, hydration, and unlock personalized meal planning"
+            data-service="nutrition-meal-suggestions"
+            data-target="nutrition-meal-suggestions.html"
+          >
+            <div class="service-icon" aria-hidden="true">&#x1F957;</div>
+            <div class="service-badges">
+              <span class="service-badge free">Free</span>
+              <span class="service-badge pro">Pro</span>
+            </div>
+            <div class="service-label">Nutrition / Meal Suggestions</div>
+            <div class="service-sub">
+              Free: calorie and water tracking with meal notes and recent health targets.
+            </div>
+            <p class="service-note">
+              Pro: personalized meal plans based on symptoms or goals, plus recipe
+              starters tailored to preferences and constraints.
+            </p>
+          </a>
+
+          <a
+            id="medicationPrescriberBtn"
+            class="service-card"
+            href="medication-prescriber.html?v=20260309b"
+            role="listitem"
+            aria-label="Medication Prescriber: suggest medications and dosages"
+            data-service="medication-prescriber"
+            data-target="medication-prescriber.html"
+          >
+            <div class="service-icon" aria-hidden="true">💊</div>
+            <div class="service-badges">
+              <span class="service-badge pro-only">Pro</span>
+            </div>
+            <div class="service-label">Medication Prescriber</div>
+            <div class="service-sub">
+              Free: kept off by default except for basic safety suggestions.
+            </div>
+            <p class="service-note">
+              Pro: dosage checks, interaction review, reminders, and exportable
+              summaries with strong clinical disclaimers.
+            </p>
+          </a>
+
+          <a
+            id="progressTrackerBtn"
+            class="service-card"
+            href="progress-tracker.html?v=20260309b"
+            role="listitem"
+            aria-label="Progress Tracker: monitor trends and streaks"
+            data-service="progress-tracker"
+            data-target="progress-tracker.html"
+          >
+            <div class="service-icon" aria-hidden="true">📈</div>
+            <div class="service-badges">
+              <span class="service-badge free">Free</span>
+              <span class="service-badge pro">Pro</span>
+            </div>
+            <div class="service-label">Progress Tracker</div>
+            <div class="service-sub">
+              Free: starter trends, simple streaks, and lightweight logs.
+            </div>
+            <p class="service-note">
+              Pro: predictive insights, custom metrics, recovery tips, and
+              exportable PDF or CSV summaries.
+            </p>
+          </a>
+
+          <a
+            id="symptomHistoryBtn"
+            class="service-card"
+            href="symptom-history.html?v=20260309b"
+            role="listitem"
+            aria-label="Symptom History: review previous symptom entries"
+            data-service="symptom-history"
+            data-target="symptom-history.html"
+          >
+            <div class="service-icon" aria-hidden="true">🗂️</div>
+            <div class="service-badges">
+              <span class="service-badge free">Free</span>
+              <span class="service-badge pro">Pro</span>
+            </div>
+            <div class="service-label">Symptom History</div>
+            <div class="service-sub">
+              Free: review the last 7-14 days of symptom entries.
+            </div>
+            <p class="service-note">
+              Pro: unlimited searchable logs, pattern detection, and AI
+              summaries of how symptoms change over time.
+            </p>
+          </a>
+
+          <a
+            id="communityPeerBtn"
+            class="service-card"
+            href="community-peer-insights.html?v=20260323e"
+            role="listitem"
+            aria-label="Community and Peer Insights: review anonymized peer trends"
+            data-service="community-peer-insights"
+            data-target="community-peer-insights.html"
+          >
+            <div class="service-icon" aria-hidden="true">&#x1F465;</div>
+            <div class="service-badges">
+              <span class="service-badge pro-only">Pro</span>
+            </div>
+            <div class="service-label">Community / Peer Insights</div>
+            <div class="service-sub">
+              Pro only: anonymized trends from peers with related symptoms, goals,
+              and wellness habits.
+            </div>
+            <p class="service-note">
+              Built for privacy-first comparison so you can spot shared hydration,
+              meal, and symptom patterns without exposing anyone else&apos;s records.
+            </p>
+          </a>
+
+          <a
+            id="analyzeTestBtn"
+            class="service-card"
+            href="analyze-test-result.html?v=20260309b"
+            role="listitem"
+            aria-label="Analyze Test Result: upload and interpret lab tests"
+            data-service="analyze-test"
+            data-target="analyze-test-result.html"
+          >
+            <div class="service-icon" aria-hidden="true">🔬</div>
+            <div class="service-badges">
+              <span class="service-badge pro-only">Pro</span>
+            </div>
+            <div class="service-label">Analyze Test Result</div>
+            <div class="service-sub">
+              Pro only: AI-supported lab review, result organization, and
+              follow-up guidance.
+            </div>
+            <p class="service-note">
+              Unlock deeper analysis, trend comparison, and discussion flags to
+              bring into a clinician review.
+            </p>
+          </a>
+        </div>
+      </section>
+
+      <section id="opsWorkspace">
+        <article class="card">
+          <div class="section-head">
+            <h2 id="interactiveDashboard" class="section-title">
+              Interactive Dashboard
+            </h2>
+            <div class="dashboard-toolbar">
+              <select id="dashboardWindowSelect" aria-label="Chart window days">
+                <option value="7">7 days</option>
+                <option value="14">14 days</option>
+                <option value="30" selected>30 days</option>
+                <option value="60">60 days</option>
+              </select>
+              <button
+                id="refreshDashboardAllBtn"
+                class="button secondary"
+                type="button"
+              >
+                Refresh All
+              </button>
+              <button
+                id="toggleAutoRefreshBtn"
+                class="button ghost"
+                type="button"
+              >
+                Auto Refresh: Off
+              </button>
+              <button
+                id="toggleFocusModeBtn"
+                class="button ghost"
+                type="button"
+              >
+                Focus Mode
+              </button>
+            </div>
+          </div>
+          <p id="dashboardStatus" class="status-pill">
+            Loading your dashboard workspace...
+          </p>
+          <div id="dashboardEntryHint" class="dashboard-entry-hint">
+            Your dashboard updates from your own records, sensors, and connected
+            tools. Add your first health entry below to personalize it.
+          </div>
+          <div class="inline" style="margin-top: 8px">
+            <button
+              class="mode-pill active"
+              data-window-preset="30"
+              type="button"
+            >
+              30d
+            </button>
+            <button class="mode-pill" data-window-preset="14" type="button">
+              14d
+            </button>
+            <button class="mode-pill" data-window-preset="7" type="button">
+              7d
+            </button>
+            <button class="mode-pill" data-window-preset="60" type="button">
+              60d
+            </button>
+          </div>
+          <div class="kpi-grid" style="margin-top: 12px">
+            <div class="kpi-card">
+              <div class="k-label">Risk</div>
+              <div id="kpiRiskValue" class="k-value">--</div>
+              <div class="meter"><span id="kpiRiskBar"></span></div>
+            </div>
+            <div class="kpi-card">
+              <div class="k-label">Forecast</div>
+              <div id="kpiForecastValue" class="k-value">--</div>
+            </div>
+            <div class="kpi-card">
+              <div class="k-label">Trend</div>
+              <div id="kpiTrendValue" class="k-value">--</div>
+            </div>
+            <div class="kpi-card">
+              <div class="k-label">Streak</div>
+              <div id="kpiStreakValue" class="k-value">--</div>
+            </div>
+            <div class="kpi-card">
+              <div class="k-label">Weekly Score</div>
+              <div id="kpiWeeklyScoreValue" class="k-value">--</div>
+            </div>
+            <div class="kpi-card">
+              <div class="k-label">Unread</div>
+              <div id="kpiUnreadValue" class="k-value">--</div>
+            </div>
+          </div>
+          <div class="inline" style="margin-top: 12px">
+            <button class="chart-tab active" data-chart="risk" type="button">
+              Risk
+            </button>
+            <button class="chart-tab" data-chart="glucose" type="button">
+              Glucose
+            </button>
+            <button class="chart-tab" data-chart="steps" type="button">
+              Steps
+            </button>
+            <button class="chart-tab" data-chart="hydration" type="button">
+              Hydration
+            </button>
+          </div>
+          <div
+            class="chart-wrap"
+            id="dashboardChart"
+            style="margin-top: 10px"
+          ></div>
+        </article>
+
+        <section class="grid grid-2" style="margin-top: 14px">
+          <article class="card">
+            <div class="section-head">
+              <h3 class="section-title">Daily Plan</h3>
+              <button
+                id="loadDailyPlanBtn"
+                class="button ghost"
+                type="button"
+              >
+                Refresh Plan
+              </button>
+            </div>
+            <div id="dailyPlanMeta" class="note" style="margin-top: 10px">
+              Your plan will appear here after the first dashboard sync.
+            </div>
+            <div id="dailyPlanList" class="grid" style="margin-top: 12px"></div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <h3 class="section-title">Notifications</h3>
+              <div class="inline">
+                <button class="notif-filter active" data-status="ALL" type="button">
+                  All
+                </button>
+                <button class="notif-filter" data-status="NEW" type="button">
+                  New
+                </button>
+                <button
+                  class="notif-filter"
+                  data-status="RESOLVED"
+                  type="button"
+                >
+                  Resolved
+                </button>
+                <button class="notif-filter" data-status="SNOOZED" type="button">
+                  Snoozed
+                </button>
+                <button
+                  id="loadNotificationsBtn"
+                  class="button ghost"
+                  type="button"
+                >
+                  Refresh
+                </button>
+              </div>
+            </div>
+            <div id="notificationList" class="grid" style="margin-top: 12px">
+              <p class="note">Your latest alerts and reminders will appear here.</p>
+            </div>
+          </article>
+        </section>
+
+        <section class="grid grid-2">
+          <article class="card">
+            <h3 class="section-title">Health Record Ingestion</h3>
+            <form id="healthForm" class="grid">
+              <label
+                >Record Date <input type="date" name="record_date" required
+              /></label>
+              <label
+                >Systolic BP <input type="number" name="systolic_bp" required
+              /></label>
+              <label
+                >Diastolic BP <input type="number" name="diastolic_bp" required
+              /></label>
+              <label
+                >BMI <input type="number" step="0.1" name="bmi" required
+              /></label>
+              <label
+                >Blood Glucose
+                <input type="number" name="blood_glucose" required
+              /></label>
+              <label
+                >Cholesterol <input type="number" name="cholesterol" required
+              /></label>
+              <label
+                >Smoking Status
+                <select name="smoking_status" required>
+                  <option value="" selected disabled>Select smoking status</option>
+                  <option value="never">Never</option>
+                  <option value="former">Former</option>
+                  <option value="current">Current</option>
+                </select></label
+              >
+              <label
+                >Activity Level
+                <select name="activity_level" required>
+                  <option value="" selected disabled>Select activity level</option>
+                  <option value="sedentary">Sedentary</option>
+                  <option value="light">Light</option>
+                  <option value="moderate">Moderate</option>
+                  <option value="active">Active</option>
+                </select></label
+              >
+              <label
+                >Steps Count (optional) <input type="number" name="steps_count"
+              /></label>
+              <label
+                >Activity Minutes (optional)
+                <input type="number" name="activity_minutes"
+              /></label>
+              <label
+                >Resting Heart Rate (optional)
+                <input type="number" step="0.1" name="resting_heart_rate"
+              /></label>
+              <label
+                >Hydration Liters (optional)
+                <input type="number" step="0.1" name="hydration_liters"
+              /></label>
+              <label>City (optional) <input type="text" name="city" /></label>
+              <button class="button primary" type="submit">
+                Submit Health Record
+              </button>
+            </form>
+            <pre id="healthOut" class="output"></pre>
+          </article>
+
+          <article class="card">
+            <h3 class="section-title">Insights + Trends</h3>
+            <div class="inline">
+              <button
+                id="loadDashboardBtn"
+                class="button secondary"
+                type="button"
+              >
+                Load Dashboard
+              </button>
+              <button id="loadRiskBtn" class="button ghost" type="button">
+                Risk Summary
+              </button>
+              <button id="loadCoachBtn" class="button ghost" type="button">
+                Coach Cards
+              </button>
+              <button id="loadUsageBtn" class="button ghost" type="button">
+                Usage
+              </button>
+              <button id="loadIntelBtn" class="button ghost" type="button">
+                Live Intel
+              </button>
+            </div>
+            <div
+              id="trendGraph"
+              class="chart-wrap"
+              style="margin-top: 10px"
+            ></div>
+            <pre id="intelOut" class="output"></pre>
+            <pre id="insightOut" class="output"></pre>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <div
+      id="tourModal"
+      class="tour-modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="tourTitle"
+    >
+      <div class="tour-card">
+        <h3 id="tourTitle">P-Cube Health AI Workspace Tour</h3>
+        <p>1. Use Open Live Dashboard to unlock analytics.</p>
+        <p>2. Submit health records, then load insights and live intel.</p>
+        <p>3. Connect wearables and push channels in Integrations Hub.</p>
+        <p>4. Use the Symptom Checker chat (voice/text/image) for guidance.</p>
+        <div class="inline">
+          <button id="tourCloseBtn" class="button primary" type="button">
+            Got It
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="theme.js?v=20260309c"></script>
+    <script src="glow.js?v=20260309c"></script>
+    <script src="app.js?v=20260408a"></script>
+  </body>
+</html>

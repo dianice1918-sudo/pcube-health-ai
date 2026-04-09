@@ -1,0 +1,22 @@
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs and temporary files
+*.log
+health-intel/tmp/
+
+# Render & other
+render.yaml
+*.out.log
+*.err.log
+
+# Large data files (add more if needed)
+*.pdf   # if you don't want to track the PDF

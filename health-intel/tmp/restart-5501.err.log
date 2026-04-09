@@ -1,0 +1,13 @@
+INFO:     Started server process [4192]
+INFO:     Waiting for application startup.
+INFO:pcube:Starting PCUBE API environment=development version=1.0.0
+INFO:pcube:Running startup schema compatibility patches
+INFO:pcube:Background scheduler disabled by ENABLE_SCHEDULER
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:5501 (Press CTRL+C to quit)
+INFO:pcube:GET /healthz -> 200
+INFO:pcube:OPTIONS /chatbot/assistant-files -> 200
+INFO:pcube:GET /chatbot/assistant-files -> 200
+INFO:pcube:OPTIONS /chat -> 200
+WARNING:pcube:LLM unavailable for chatbot_ask user_id=6 tenant_id=1: pinecone: LLM request failed: The read operation timed out
+INFO:pcube:POST /chat -> 200

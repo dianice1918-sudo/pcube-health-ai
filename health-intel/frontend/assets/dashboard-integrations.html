@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>P-Cube Health AI | Integrations Hub</title>
+    <meta
+      name="description"
+      content="Step sync, wearable connections, push setup, and share links."
+    />
+    <meta
+      name="keywords"
+      content="wearable integrations, step sync, push setup, share links, P-Cube Health AI"
+    />
+    <meta name="author" content="P-Cube Health AI" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta name="theme-color" content="#2563eb" />
+    <link
+      rel="icon"
+      href="pcube_logo.png"
+      type="image/png"
+    />
+    <link rel="stylesheet" href="style.css?v=20260309c" />
+    <link rel="stylesheet" href="dashboard.css?v=20260323c" />
+  </head>
+  <body class="glow-surface dashboard-page">
+    <header class="header" role="banner">
+      <div class="container header-inner app-header">
+        <a
+          class="brand"
+          href="pcube.html"
+          aria-label="P-Cube Health AI home"
+        >
+          <img
+            src="pcube_logo.png"
+            alt="P-Cube Health AI logo"
+            class="logo"
+          />
+          <span class="site-name">P-Cube Health AI</span>
+        </a>
+        <nav class="top-nav" aria-label="Workspace sections">
+          <a
+            class="nav-item"
+            href="dashboard.html#interactiveDashboard"
+            >Dashboard</a
+          >
+          <a
+            class="nav-item"
+            href="dashboard-alert-hub.html#alertHub"
+            >Alert Hub</a
+          >
+          <a
+            class="nav-item active"
+            href="dashboard-integrations.html#integrationsHub"
+            >Integrations</a
+          >
+        </nav>
+        <div class="top-actions">
+          <div class="user-menu">
+            <button
+              id="userMenuBtn"
+              class="user-menu-trigger"
+              type="button"
+              aria-haspopup="menu"
+              aria-expanded="false"
+              aria-controls="userMenuPanel"
+              aria-label="Open user menu"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 12a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Zm0 2.25c-4.42 0-8 2.35-8 5.25 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 0-2.9-3.58-5.25-8-5.25Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+            <div id="userMenuPanel" class="user-menu-panel hidden" role="menu">
+              <label class="theme-control" aria-label="Theme mode">
+                <span class="theme-label">Theme</span>
+                <select
+                  class="theme-select"
+                  data-theme-control
+                  aria-label="Theme mode"
+                >
+                  <option value="system">Auto</option>
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                </select>
+              </label>
+              <a
+                class="menu-link"
+                href="location.html"
+                role="menuitem"
+                >Account Settings</a
+              >
+              <button
+                id="openMobileGuideBtn"
+                class="menu-link"
+                type="button"
+                role="menuitem"
+              >
+                Install App
+              </button>
+              <button
+                id="logoutBtn"
+                class="menu-link danger"
+                type="button"
+                role="menuitem"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container app-shell">
+      <section class="welcome-grid">
+        <article class="welcome-card">
+          <h1 id="welcomeTitle" class="welcome-title glowing-header">
+            Integrations and data channels.
+          </h1>
+          <p id="welcomeSubtitle" class="welcome-subtitle">
+            Connect wearables, sync motion data, manage push devices, and create
+            share links for reports.
+          </p>
+          <div class="inline">
+            <button id="enterDashboardBtn" class="button primary" type="button">
+              Open Integrations Hub
+            </button>
+            <button id="openWorkspaceTourBtn" class="button soft" type="button">
+              Quick Tour
+            </button>
+            <button
+              id="loadDashboardBtnHero"
+              class="button secondary"
+              type="button"
+            >
+              Refresh Summary
+            </button>
+          </div>
+        </article>
+
+        <article class="hero-block">
+          <p class="eyebrow">Services</p>
+          <h3 class="glowing-header">Choose What You Need</h3>
+          <div class="inline" style="margin-bottom: clamp(8px, 1vw, 12px)">
+            <button id="openFreeToolsBtn" class="button primary" type="button">
+              Open Free Services
+            </button>
+            <button id="openProToolsBtn" class="button secondary" type="button">
+              Open Pro Services
+            </button>
+          </div>
+          <div class="mini-kpis">
+            <div class="mini-kpi">
+              <div class="label">Current Risk</div>
+              <div class="value" id="heroRiskMini">--</div>
+            </div>
+            <div class="mini-kpi">
+              <div class="label">Forecast Risk</div>
+              <div class="value" id="heroForecastMini">--</div>
+            </div>
+            <div class="mini-kpi">
+              <div class="label">Unread Alerts</div>
+              <div class="value" id="heroUnreadMini">0</div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="opsWorkspace" class="hidden">
+        <section class="grid grid-2">
+          <article class="card" id="stepCounterHub">
+            <div class="section-head">
+              <h3 class="section-title">Step Sensor + Motion Sync</h3>
+              <button
+                id="refreshDashboardAllBtn"
+                class="button secondary"
+                type="button"
+              >
+                Refresh All
+              </button>
+            </div>
+            <p id="dashboardStatus" class="status-pill">
+              Integrations hub ready.
+            </p>
+            <div class="inline">
+              <button
+                id="startMotionStepBtn"
+                class="button secondary"
+                type="button"
+              >
+                Start Motion Counter
+              </button>
+              <button id="stopMotionStepBtn" class="button ghost" type="button">
+                Stop
+              </button>
+              <button
+                id="resetMotionStepBtn"
+                class="button ghost"
+                type="button"
+              >
+                Reset Today
+              </button>
+            </div>
+            <p id="motionStepStatus" class="note">
+              Motion counter not started.
+            </p>
+            <p id="stepSensorStatus" class="note">No step sync packet yet.</p>
+            <form id="stepSyncForm" class="grid">
+              <label
+                >Device ID
+                <input type="text" name="device_id" value="android-primary"
+              /></label>
+              <label>
+                Sensor Type
+                <select name="sensor_type">
+                  <option value="STEP_COUNTER">STEP_COUNTER</option>
+                  <option value="STEP_DETECTOR">STEP_DETECTOR</option>
+                  <option value="ACCELEROMETER">ACCELEROMETER</option>
+                </select>
+              </label>
+              <label
+                >Record Date <input type="date" name="record_date"
+              /></label>
+              <label
+                >Total Steps Since Boot
+                <input type="number" name="total_steps_since_boot"
+              /></label>
+              <label
+                >Detected Steps Delta
+                <input type="number" name="detected_steps_delta"
+              /></label>
+              <label
+                >Activity Minutes Delta
+                <input type="number" name="activity_minutes_delta" value="0"
+              /></label>
+              <label
+                >Timezone
+                <input type="text" name="timezone" placeholder="Africa/Lagos"
+              /></label>
+              <button class="button primary" type="submit">Sync Steps</button>
+            </form>
+            <pre id="stepOut" class="output"></pre>
+          </article>
+
+          <article class="card" id="integrationsHub">
+            <h3 class="section-title">Integrations + Sharing</h3>
+            <div class="inline">
+              <button id="oauthGoogleBtn" class="button ghost" type="button">
+                Google Fit OAuth
+              </button>
+              <button id="oauthFitbitBtn" class="button ghost" type="button">
+                Fitbit OAuth
+              </button>
+              <button id="listWearablesBtn" class="button ghost" type="button">
+                List Wearables
+              </button>
+            </div>
+            <form id="wearableConnectForm" class="grid">
+              <label>
+                Provider
+                <input
+                  type="text"
+                  name="provider"
+                  placeholder="google_fit"
+                  required
+                />
+              </label>
+              <label
+                >External User ID <input type="text" name="external_user_id"
+              /></label>
+              <label
+                >Access Token <input type="text" name="access_token"
+              /></label>
+              <button class="button secondary" type="submit">
+                Connect Wearable
+              </button>
+            </form>
+            <form id="wearableSyncForm" class="grid">
+              <label>
+                Provider
+                <input
+                  type="text"
+                  name="provider"
+                  placeholder="google_fit"
+                  required
+                />
+              </label>
+              <label
+                >Record Date <input type="date" name="record_date"
+              /></label>
+              <label>Steps <input type="number" name="steps_count" /></label>
+              <label
+                >Activity Minutes <input type="number" name="activity_minutes"
+              /></label>
+              <label
+                >Hydration Liters
+                <input type="number" step="0.1" name="hydration_liters"
+              /></label>
+              <label
+                >Resting HR
+                <input type="number" step="0.1" name="resting_heart_rate"
+              /></label>
+              <button class="button secondary" type="submit">
+                Sync Wearable Data
+              </button>
+            </form>
+            <pre id="wearableOut" class="output"></pre>
+
+            <div class="inline" style="margin-top: 8px">
+              <button id="listPushTokensBtn" class="button ghost" type="button">
+                List Push Tokens
+              </button>
+              <button id="testPushBtn" class="button ghost" type="button">
+                Send Test Push
+              </button>
+            </div>
+            <form id="pushTokenForm" class="grid">
+              <label
+                >Provider <input type="text" name="provider" value="fcm"
+              /></label>
+              <label>
+                Platform
+                <input
+                  type="text"
+                  name="platform"
+                  placeholder="android/web"
+                  required
+                />
+              </label>
+              <label
+                >Push Token <input type="text" name="push_token" required
+              /></label>
+              <label
+                >Device Label <input type="text" name="device_label"
+              /></label>
+              <button class="button secondary" type="submit">
+                Register Push Token
+              </button>
+            </form>
+            <pre id="pushOut" class="output"></pre>
+
+            <form id="shareForm" class="grid">
+              <label
+                >Expires (hours)
+                <input type="number" name="expires_hours" value="72"
+              /></label>
+              <label
+                >Lookback Days
+                <input type="number" name="lookback_days" value="30"
+              /></label>
+              <button class="button primary" type="submit">
+                Create Share Link
+              </button>
+            </form>
+            <pre id="shareOut" class="output"></pre>
+            <pre id="shareHint" class="output"></pre>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <div
+      id="tourModal"
+      class="tour-modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="tourTitle"
+    >
+      <div class="tour-card">
+        <h3 id="tourTitle">P-Cube Health AI Workspace Tour</h3>
+        <p>1. Start with motion counter and step sync packets.</p>
+        <p>2. Connect wearable providers and keep sync dates current.</p>
+        <p>3. Register push channels and generate secure share links.</p>
+        <div class="inline">
+          <button id="tourCloseBtn" class="button primary" type="button">
+            Got It
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="theme.js?v=20260309c"></script>
+    <script src="glow.js?v=20260309c"></script>
+    <script src="app.js?v=20260408a"></script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+health-intel/
+│
+├── app/
+│   ├── database.py
+│   └── models.py
+│
+├── .env
+└── requirements.txt

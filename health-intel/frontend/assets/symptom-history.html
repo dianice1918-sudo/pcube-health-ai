@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Symptom History Tracker | P-Cube Health AI</title>
+    <meta
+      name="description"
+      content="Review past symptom checker activity, track recurring concerns, and monitor symptom history with P-Cube Health AI."
+    />
+    <meta
+      name="keywords"
+      content="symptom history tracker, symptom log, health history tool, symptom monitoring, P-Cube Health AI"
+    />
+    <meta name="author" content="P-Cube Health AI" />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
+    <meta name="theme-color" content="#2563eb" />
+    <meta property="og:site_name" content="P-Cube Health AI" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Symptom History Tracker | P-Cube Health AI"
+    />
+    <meta
+      property="og:description"
+      content="Track symptom checker activity, recurring patterns, and recent history in one place."
+    />
+    <meta property="og:image" content="pcube_logo.png" />
+    <meta property="og:image:alt" content="P-Cube Health AI logo" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Symptom History Tracker | P-Cube Health AI"
+    />
+    <meta
+      name="twitter:description"
+      content="Monitor past symptom entries and recurring concerns with P-Cube Health AI."
+    />
+    <meta name="twitter:image" content="pcube_logo.png" />
+    <link rel="icon" href="pcube_logo.png" type="image/png" />
+    <link rel="stylesheet" href="style.css?v=20260407b" />
+    <style>
+      .tool-page {
+        padding-top: 120px;
+        padding-bottom: 80px;
+      }
+      .tool-hero {
+        text-align: center;
+        max-width: 860px;
+        margin: 0 auto 40px;
+      }
+      .tool-hero p {
+        margin: 0 auto 22px;
+        color: #3a5173;
+        max-width: 680px;
+      }
+      .tool-actions {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+      .panel {
+        border-radius: 20px;
+        border: 1px solid #cfe1ff;
+        background: linear-gradient(
+          165deg,
+          rgba(255, 255, 255, 0.96),
+          rgba(239, 246, 255, 0.92)
+        );
+        box-shadow: 0 18px 40px rgba(30, 64, 175, 0.15);
+        padding: clamp(22px, 3vw, 30px);
+        margin-bottom: 24px;
+      }
+      .filters {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+      label {
+        font-weight: 600;
+        color: #1f3560;
+        display: block;
+        margin-bottom: 6px;
+      }
+      input,
+      select {
+        width: 100%;
+        min-height: 46px;
+        border-radius: 12px;
+        border: 1.5px solid #b5d0ff;
+        padding: 10px 14px;
+        font: inherit;
+        background: #fff;
+        color: #0f172a;
+      }
+      .history-list {
+        display: grid;
+        gap: 16px;
+      }
+      .history-item {
+        border-radius: 16px;
+        border: 1px solid #dbe6ff;
+        background: #f8fbff;
+        padding: 16px;
+      }
+      .history-item h4 {
+        margin-bottom: 6px;
+      }
+      .history-empty,
+      .history-note {
+        border-radius: 16px;
+        border: 1px solid #dbe6ff;
+        background: #f8fbff;
+        padding: 16px;
+        color: #48607f;
+      }
+      .history-note {
+        margin-bottom: 16px;
+      }
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .pill {
+        background: rgba(59, 130, 246, 0.12);
+        color: #1e3a8a;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 0.82rem;
+        font-weight: 600;
+      }
+      .summary-grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+      .summary-card {
+        border-radius: 16px;
+        border: 1px solid #dbe6ff;
+        background: #f8fbff;
+        padding: 16px;
+      }
+      .summary-card h4 {
+        margin-bottom: 6px;
+      }
+      .summary-card p {
+        margin: 0;
+        min-height: 1.4em;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #1e3a8a;
+      }
+      @media (max-width: 640px) {
+        .history-item,
+        .history-empty,
+        .history-note {
+          padding: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header" role="banner">
+      <div class="container header-inner">
+        <a
+          class="brand"
+          href="pcube.html?v=20260407b"
+          data-target="pcube.html"
+          aria-label="P-Cube Health AI home"
+        >
+          <img src="pcube_logo.png" alt="P-Cube Health AI logo" class="logo" />
+          <span class="site-name">P-Cube Health AI</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="tool-page">
+      <section class="tool-hero container">
+        <h1>Symptom History</h1>
+        <p>
+          Review past symptom notes, spot patterns, and keep your care team
+          aligned with the full timeline.
+        </p>
+        <div class="tool-actions">
+          <a class="button primary" href="checker.html?v=20260407b" data-target="checker.html"
+            >Open Symptom Checker</a>
+          <a
+            class="button secondary"
+            href="dashboard.html?v=20260407b#servicesWorkspace"
+            data-target="dashboard.html#servicesWorkspace"
+            >Back to Dashboard</a>
+        </div>
+      </section>
+
+      <section class="container panel">
+        <h2>Overview</h2>
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4>Entries logged</h4>
+            <p id="entriesLoggedValue">0</p>
+          </div>
+          <div class="summary-card">
+            <h4>Most frequent</h4>
+            <p id="mostFrequentValue"></p>
+          </div>
+          <div class="summary-card">
+            <h4>Last update</h4>
+            <p id="lastUpdateValue"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="container panel">
+        <h2>Filter history</h2>
+        <div class="filters">
+          <div>
+            <label for="range">Date range</label>
+            <select id="range">
+              <option value="7">Last 7 days</option>
+              <option value="30" selected>Last 30 days</option>
+              <option value="90">Last 90 days</option>
+              <option value="all">All time</option>
+            </select>
+          </div>
+          <div>
+            <label for="activityType">Activity type</label>
+            <select id="activityType">
+              <option value="all">All activity</option>
+              <option value="text">Text checks</option>
+              <option value="image">Image checks</option>
+            </select>
+          </div>
+          <div>
+            <label for="search">Keyword search</label>
+            <input id="search" type="text" placeholder="e.g., headache" />
+          </div>
+        </div>
+      </section>
+
+      <section class="container panel">
+        <h2>Recent entries</h2>
+        <p class="history-note" id="historyNote">
+          This page starts fresh and updates only from real symptom checker
+          activity on your account.
+        </p>
+        <div class="history-list" id="historyList">
+          <div class="history-empty" id="historyEmptyState">
+            No symptom activity yet. Open the symptom checker to begin building
+            your history.
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="tool-redirect.js?v=20260407b"></script>
+    <script src="symptom-history.js?v=20260407b"></script>
+  </body>
+</html>

@@ -1,0 +1,139 @@
+INFO:     Started server process [12192]
+INFO:     Waiting for application startup.
+INFO:pcube:Starting PCUBE API environment=development version=1.0.0
+INFO:apscheduler.scheduler:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+INFO:apscheduler.scheduler:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+INFO:apscheduler.scheduler:Added job "run_daily_risk_check" to job store "default"
+INFO:apscheduler.scheduler:Added job "run_live_intel_check" to job store "default"
+INFO:apscheduler.scheduler:Scheduler started
+INFO:pcube:Background scheduler enabled
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:5500 (Press CTRL+C to quit)
+INFO:pcube:GET /healthz -> 200
+INFO:pcube:GET /app/otp -> 307
+INFO:pcube:GET /frontend/assets/login.html -> 200
+INFO:pcube:GET /frontend/assets/signup.html -> 200
+INFO:pcube:GET /frontend/assets/otp.html -> 200
+INFO:pcube:GET /frontend/assets/otp.html -> 200
+INFO:pcube:GET / -> 200
+INFO:pcube:GET /favicon.ico -> 404
+INFO:pcube:GET /healthz -> 200
+INFO:pcube:GET /health-intel/frontend/assets/pcube.html -> 404
+INFO:pcube:GET /health-intel/frontend/assets/pcube.dashboard -> 404
+INFO:pcube:GET / -> 200
+INFO:pcube:GET /frontend/assets/dashboard.html -> 200
+INFO:pcube:GET /frontend/assets/pcube_logo.png -> 304
+INFO:pcube:GET /frontend/assets/style.css -> 200
+INFO:pcube:GET /frontend/assets/dashboard.css -> 200
+INFO:pcube:GET /frontend/assets/theme.js -> 200
+INFO:pcube:GET /frontend/assets/glow.js -> 404
+INFO:pcube:GET /frontend/assets/app.js -> 200
+INFO:pcube:GET /frontend/assets/checker.html -> 200
+INFO:pcube:GET /frontend/assets/style.css -> 200
+INFO:pcube:GET /frontend/assets/login.html -> 200
+INFO:pcube:GET /frontend/assets/login.js -> 200
+INFO:pcube:GET /frontend/assets/login.css -> 200
+INFO:pcube:GET /healthz -> 200
+INFO:pcube:POST /login -> 200
+INFO:pcube:GET /frontend/assets/location.html -> 200
+INFO:pcube:GET /frontend/assets/glow.js -> 404
+INFO:pcube:GET /frontend/assets/location.css -> 200
+INFO:pcube:GET /frontend/assets/theme.js -> 200
+INFO:pcube:GET /frontend/assets/location.js -> 200
+INFO:pcube:GET /users/me/location -> 200
+INFO:pcube:PATCH /users/me/location-permission -> 200
+INFO:pcube:PUT /users/me/location -> 200
+INFO:pcube:GET /frontend/assets/dashboard.html -> 200
+INFO:pcube:GET /frontend/assets/glow.js -> 404
+INFO:pcube:GET /my-risk-history -> 200
+INFO:pcube:GET /my-health -> 200
+INFO:pcube:GET /my/coach-cards -> 200
+INFO:pcube:GET /users/me/dashboard -> 200
+INFO:pcube:GET /chatbot/usage -> 200
+INFO:pcube:GET /users/me/notifications -> 200
+INFO:pcube:GET /my-trends/graph -> 200
+INFO:pcube:GET /frontend/assets/progress-tracker.html -> 200
+INFO:pcube:GET /frontend/assets/style.css -> 200
+INFO:pcube:GET /frontend/assets/tool-redirect.js -> 200
+INFO:pcube:GET /frontend/assets/dashboard.html -> 200
+INFO:pcube:GET /frontend/assets/glow.js -> 404
+INFO:pcube:GET /frontend/assets/dashboard-integrations.html -> 200
+INFO:pcube:GET /frontend/assets/glow.js -> 404
+INFO:pcube:GET /frontend/assets/dashboard.html -> 200
+INFO:pcube:GET /frontend/assets/glow.js -> 404
+INFO:pcube:GET /my-risk-history -> 200
+INFO:pcube:GET /chatbot/usage -> 200
+INFO:pcube:GET /my/coach-cards -> 200
+INFO:pcube:GET /my-health -> 200
+INFO:pcube:GET /users/me/dashboard -> 200
+INFO:pcube:GET /users/me/notifications -> 200
+INFO:pcube:GET /my-trends/graph -> 200
+INFO:pcube:GET /frontend/assets/analyze-test-result.html -> 200
+INFO:pcube:GET /frontend/assets/style.css -> 200
+INFO:pcube:GET /frontend/assets/tool-redirect.js -> 200
+INFO:pcube:GET /frontend/assets/analyze-test-result.js -> 200
+INFO:pcube:GET /chatbot/usage -> 200
+WARNING:pcube:LLM unavailable for chatbot_ask user_id=19 tenant_id=6: LLM request failed: HTTP 429 {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+INFO:pcube:POST /chat -> 200
+WARNING:pcube:LLM unavailable for chatbot_ask user_id=19 tenant_id=6: LLM request failed: HTTP 429 {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+INFO:pcube:POST /chat -> 200
+WARNING:pcube:LLM unavailable for chatbot_ask user_id=19 tenant_id=6: LLM request failed: HTTP 429 {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+INFO:pcube:POST /chat -> 200
+WARNING:pcube:LLM unavailable for chatbot_ask user_id=19 tenant_id=6: LLM request failed: HTTP 429 {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+INFO:pcube:POST /chat -> 200
+INFO:pcube:GET /frontend/assets/medication-prescriber.html -> 200
+INFO:pcube:GET /frontend/assets/tool-redirect.js -> 200
+INFO:pcube:GET /frontend/assets/medication-prescriber.js -> 200
+INFO:pcube:GET /frontend/assets/nutrition-meal-suggestions.html -> 200
+INFO:pcube:GET /frontend/assets/nutrition-meal-suggestions.js -> 200
+INFO:pcube:GET /chatbot/usage -> 200
+INFO:pcube:GET /nutrition/summary -> 200
+INFO:pcube:GET /frontend/assets/pcube.html -> 200
+INFO:pcube:GET /frontend/assets/signup.html -> 200
+INFO:pcube:GET /healthz -> 200
+INFO:pcube:GET /users/me/location -> 200
+INFO:pcube:GET /frontend/assets/glow.js -> 404
+INFO:pcube:GET /frontend/assets/dashboard-alert-hub.html -> 200
+INFO:pcube:GET /frontend/assets/glow.js -> 404
+INFO:pcube:GET /frontend/assets/glow.js -> 404
+INFO:pcube:GET /my-risk-history -> 200
+INFO:pcube:GET /my/coach-cards -> 200
+INFO:pcube:GET /my-health -> 200
+INFO:pcube:GET /chatbot/usage -> 200
+INFO:pcube:GET /users/me/dashboard -> 200
+INFO:pcube:GET /users/me/notifications -> 200
+INFO:pcube:GET /my-trends/graph -> 200
+INFO:apscheduler.executors.default:Running job "run_live_intel_check (trigger: interval[1:00:00], next run at: 2026-03-25 12:53:36 WAT)" (scheduled at 2026-03-25 11:53:36.423283+01:00)
+INFO:apscheduler.executors.default:Job "run_live_intel_check (trigger: interval[1:00:00], next run at: 2026-03-25 12:53:36 WAT)" executed successfully

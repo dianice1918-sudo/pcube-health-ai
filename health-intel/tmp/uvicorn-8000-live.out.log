@@ -1,0 +1,79 @@
+INFO:     127.0.0.1:63358 - "POST /login HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:52822 - "GET /frontend/assets/checker.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52822 - "GET /frontend/assets/login.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52822 - "GET /frontend/assets/login.js?v=20260409a HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52822 - "POST /login HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:63358 - "POST /login/request-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52822 - "POST /login/request-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52822 - "GET /frontend/assets/otp.html?flow=login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64361 - "POST /login/verify-code HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:50023 - "POST /login/verify-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50023 - "GET /frontend/assets/location.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50023 - "GET /frontend/assets/dashboard.css?v=20260323c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62897 - "GET /frontend/assets/location.css?v=20260323b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52016 - "GET /frontend/assets/glow.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63091 - "GET /frontend/assets/theme.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50023 - "GET /frontend/assets/location.js?v=20260408a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50023 - "GET /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59144 - "GET /frontend/assets/dashboard.html?v=20260309b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59144 - "GET /frontend/assets/style.css?v=20260309c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49855 - "GET /frontend/assets/theme.js?v=20260309c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57435 - "GET /frontend/assets/glow.js?v=20260309c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49855 - "GET /frontend/assets/app.js?v=20260408a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50468 - "PATCH /users/me/location-permission HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49855 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59144 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53061 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57435 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50468 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50468 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50468 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59562 - "POST /health-record HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53031 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49200 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59562 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59562 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59562 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49200 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59562 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59216 - "GET /frontend/assets/checker.html?v=20260309b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59216 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59216 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53269 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52502 - "GET /frontend/assets/checker.html?v=20260309b HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51451 - "GET /frontend/assets/medication-prescriber.html?v=20260309b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51451 - "GET /frontend/assets/style.css?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50559 - "GET /frontend/assets/tool-redirect.js?v=20260323a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61020 - "GET /frontend/assets/medication-prescriber.js?v=20260407a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52502 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55222 - "POST /chatbot/medication-plan HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62748 - "POST /chatbot/medication-plan HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49678 - "POST /chatbot/medication-plan HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:55001 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57849 - "GET /frontend/assets/login.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57849 - "GET /frontend/assets/login.js?v=20260409a HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57849 - "GET /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57849 - "GET /frontend/assets/dashboard.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56916 - "GET /frontend/assets/checker.html?v=20260309b HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56916 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51598 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56860 - "POST /chatbot/medication-plan HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55216 - "GET /frontend/assets/checker.html?v=20260309b HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55216 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51028 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55730 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62243 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57453 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59457 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61520 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61940 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49654 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59255 - "GET /frontend/assets/checker.html?v=20260309b HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59255 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57586 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55306 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60216 - "GET /frontend/assets/pcube.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60216 - "GET /frontend/assets/pcube.html?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60216 - "GET /frontend/assets/login.html?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60216 - "GET /frontend/assets/login.js?v=20260409a HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53727 - "POST /login HTTP/1.1" 401 Unauthorized

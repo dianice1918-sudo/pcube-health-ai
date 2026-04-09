@@ -1,0 +1,58 @@
+services:
+  migrate:
+    build: .
+    restart: "no"
+    env_file:
+      - .env.production
+    environment:
+      APP_ENV: production
+      ENABLE_DOCS: "false"
+      ENABLE_SCHEDULER: "false"
+      RUN_STARTUP_SCHEMA_PATCHES: "false"
+    command: ["alembic", "upgrade", "head"]
+    volumes:
+      - ./service-account.json:/run/secrets/service-account.json:ro
+
+  api:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    env_file:
+      - .env.production
+    environment:
+      APP_ENV: production
+      ENABLE_DOCS: "false"
+      ENABLE_SCHEDULER: "false"
+      RUN_STARTUP_SCHEMA_PATCHES: "false"
+    ports:
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      - ./service-account.json:/run/secrets/service-account.json:ro
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "python -c \"import urllib.request,sys;sys.exit(0) if urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=5).status == 200 else sys.exit(1)\"",
+        ]
+      interval: 20s
+      timeout: 6s
+      retries: 5
+      start_period: 20s
+
+  scheduler:
+    build: .
+    restart: unless-stopped
+    command: ["python", "-m", "app.worker_scheduler"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    env_file:
+      - .env.production
+    environment:
+      APP_ENV: production
+      ENABLE_SCHEDULER: "true"
+      RUN_STARTUP_SCHEMA_PATCHES: "false"
+    volumes:
+      - ./service-account.json:/run/secrets/service-account.json:ro

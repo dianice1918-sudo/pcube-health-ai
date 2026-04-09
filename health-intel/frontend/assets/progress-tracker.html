@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Progress Tracker | P-Cube Health AI</title>
+    <meta
+      name="description"
+      content="Track wellness progress, review activity trends, and monitor day-to-day improvement with the P-Cube Health AI progress tracker."
+    />
+    <meta
+      name="keywords"
+      content="health progress tracker, wellness progress, activity trends, preventive health dashboard, P-Cube Health AI"
+    />
+    <meta name="author" content="P-Cube Health AI" />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
+    <meta name="theme-color" content="#2563eb" />
+    <meta property="og:site_name" content="P-Cube Health AI" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Health Progress Tracker | P-Cube Health AI"
+    />
+    <meta
+      property="og:description"
+      content="Monitor wellness momentum, activity trends, and health progress over time."
+    />
+    <meta property="og:image" content="pcube_logo.png" />
+    <meta property="og:image:alt" content="P-Cube Health AI logo" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Health Progress Tracker | P-Cube Health AI"
+    />
+    <meta
+      name="twitter:description"
+      content="Review progress, trends, and daily health improvements with P-Cube Health AI."
+    />
+    <meta name="twitter:image" content="pcube_logo.png" />
+    <link rel="icon" href="pcube_logo.png" type="image/png" />
+    <link rel="stylesheet" href="style.css?v=20260312d" />
+    <style>
+      .tool-page {
+        padding-top: 120px;
+        padding-bottom: 80px;
+      }
+      .tool-hero {
+        text-align: center;
+        max-width: 880px;
+        margin: 0 auto 40px;
+      }
+      .tool-hero p {
+        margin: 0 auto 22px;
+        color: #3a5173;
+        max-width: 680px;
+      }
+      .tool-actions {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+      .panel {
+        border-radius: 20px;
+        border: 1px solid #cfe1ff;
+        background: linear-gradient(
+          165deg,
+          rgba(255, 255, 255, 0.96),
+          rgba(239, 246, 255, 0.92)
+        );
+        box-shadow: 0 18px 40px rgba(30, 64, 175, 0.15);
+        padding: clamp(22px, 3vw, 30px);
+      }
+      .metrics {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        margin-bottom: 24px;
+      }
+      .metric {
+        border-radius: 16px;
+        border: 1px solid #dbe6ff;
+        padding: 16px;
+        background: #f8fbff;
+      }
+      .metric h4 {
+        margin: 0 0 6px;
+        font-size: 0.95rem;
+        color: #2c3f63;
+      }
+      .metric p {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #1e3a8a;
+      }
+      .grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      }
+      .timeline {
+        display: grid;
+        gap: 12px;
+      }
+      .timeline-item {
+        border-radius: 14px;
+        border: 1px solid #dbe6ff;
+        padding: 12px 14px;
+        background: #f8fbff;
+      }
+      .goal-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+      }
+      .goal-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid #dbe6ff;
+        background: #f8fbff;
+        color: #2d3f5f;
+      }
+      .tag {
+        background: rgba(59, 130, 246, 0.12);
+        color: #1e3a8a;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 0.82rem;
+        font-weight: 600;
+      }
+      @media (max-width: 960px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header" role="banner">
+      <div class="container header-inner">
+        <a
+          class="brand"
+          href="pcube.html?v=20260312d"
+          data-target="pcube.html"
+          aria-label="P-Cube Health AI home"
+        >
+          <img src="pcube_logo.png" alt="P-Cube Health AI logo" class="logo" />
+          <span class="site-name">P-Cube Health AI</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="tool-page">
+      <section class="tool-hero container">
+        <h1>Progress Tracker</h1>
+        <p>
+          Track your health momentum, compare week-over-week changes, and keep
+          goals aligned with your care plan.
+        </p>
+        <div class="tool-actions">
+          <a class="button primary" href="dashboard.html?v=20260312d#interactiveDashboard" data-target="dashboard.html#interactiveDashboard"
+            >View Dashboard Insights</a>
+          <a
+            class="button secondary"
+            href="dashboard.html?v=20260312d#servicesWorkspace"
+            data-target="dashboard.html#servicesWorkspace"
+            >Back to Dashboard</a>
+        </div>
+      </section>
+
+      <section class="container panel">
+        <div class="metrics">
+          <div class="metric">
+            <h4>Weekly adherence</h4>
+            <p>82%</p>
+          </div>
+          <div class="metric">
+            <h4>Symptom improvement</h4>
+            <p>+14%</p>
+          </div>
+          <div class="metric">
+            <h4>Sleep consistency</h4>
+            <p>6.8 hrs</p>
+          </div>
+          <div class="metric">
+            <h4>Activity streak</h4>
+            <p>9 days</p>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div>
+            <h2>Trend summary</h2>
+            <p>
+              Improvements noted in hydration and fatigue levels. Stress signals
+              elevated mid-week, suggesting a check-in and mindfulness break.
+            </p>
+            <div class="timeline">
+              <div class="timeline-item">
+                <strong>Mon</strong> Stable energy, normal appetite
+              </div>
+              <div class="timeline-item">
+                <strong>Wed</strong> Stress flagged, increased caffeine intake
+              </div>
+              <div class="timeline-item">
+                <strong>Fri</strong> Recovery pattern improving
+              </div>
+            </div>
+          </div>
+          <div>
+            <h2>Active goals</h2>
+            <ul class="goal-list">
+              <li>
+                7-hour sleep average
+                <span class="tag">On track</span>
+              </li>
+              <li>
+                3 mindful breaks daily
+                <span class="tag">Needs focus</span>
+              </li>
+              <li>
+                5,000 steps baseline
+                <span class="tag">Achieved</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="tool-redirect.js?v=20260312d"></script>
+  </body>
+</html>

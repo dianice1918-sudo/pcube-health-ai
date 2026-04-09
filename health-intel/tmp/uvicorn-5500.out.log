@@ -1,0 +1,91 @@
+Scheduler started (risk every 24h, live-intel every 60m)
+INFO:     127.0.0.1:50691 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50746 - "GET /app/otp HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:50748 - "GET /frontend/assets/login.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50745 - "GET /frontend/assets/signup.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50747 - "GET /frontend/assets/otp.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50746 - "GET /frontend/assets/otp.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59526 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59526 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61685 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57388 - "GET /health-intel/frontend/assets/pcube.html HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61883 - "GET /health-intel/frontend/assets/pcube.dashboard HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49668 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52707 - "GET /frontend/assets/dashboard.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57638 - "GET /frontend/assets/pcube_logo.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52707 - "GET /frontend/assets/style.css?v=20260309c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61886 - "GET /frontend/assets/dashboard.css?v=20260323c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64654 - "GET /frontend/assets/theme.js?v=20260309c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50212 - "GET /frontend/assets/glow.js?v=20260309c HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64484 - "GET /frontend/assets/app.js?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62385 - "GET /frontend/assets/checker.html?v=20260309b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62385 - "GET /frontend/assets/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62385 - "GET /frontend/assets/login.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62385 - "GET /frontend/assets/login.js?v=20260323c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65130 - "GET /frontend/assets/login.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65130 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65130 - "POST /login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65130 - "GET /frontend/assets/location.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56567 - "GET /frontend/assets/glow.js HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65130 - "GET /frontend/assets/location.css?v=20260323b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54635 - "GET /frontend/assets/theme.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65079 - "GET /frontend/assets/location.js?v=20260323b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65079 - "GET /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58046 - "PATCH /users/me/location-permission HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58046 - "PUT /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51861 - "GET /frontend/assets/dashboard.html?v=20260309b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51861 - "GET /frontend/assets/glow.js?v=20260309c HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65196 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64880 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53779 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55769 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56464 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56464 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56464 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63429 - "GET /frontend/assets/progress-tracker.html?v=20260309b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63429 - "GET /frontend/assets/style.css?v=20260312d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55676 - "GET /frontend/assets/tool-redirect.js?v=20260312d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62258 - "GET /frontend/assets/dashboard.html?v=20260312d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62258 - "GET /frontend/assets/glow.js?v=20260309c HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60266 - "GET /frontend/assets/dashboard-integrations.html?v=20260309c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60266 - "GET /frontend/assets/glow.js?v=20260309c HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61648 - "GET /frontend/assets/dashboard.html?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61648 - "GET /frontend/assets/glow.js?v=20260309c HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51553 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57520 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50176 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56949 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61648 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61648 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61648 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51304 - "GET /frontend/assets/analyze-test-result.html?v=20260309b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51304 - "GET /frontend/assets/style.css?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53068 - "GET /frontend/assets/tool-redirect.js?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55812 - "GET /frontend/assets/analyze-test-result.js?v=20260323a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55812 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56813 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65092 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59925 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64752 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62409 - "GET /frontend/assets/medication-prescriber.html?v=20260309b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62409 - "GET /frontend/assets/tool-redirect.js?v=20260323a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56719 - "GET /frontend/assets/medication-prescriber.js?v=20260323a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56491 - "GET /frontend/assets/nutrition-meal-suggestions.html?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56491 - "GET /frontend/assets/nutrition-meal-suggestions.js?v=20260323b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52195 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56491 - "GET /nutrition/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55421 - "GET /frontend/assets/pcube.html?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54347 - "GET /frontend/assets/signup.html?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54347 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54347 - "GET /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54347 - "GET /frontend/assets/glow.js?v=20260309c HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50736 - "GET /frontend/assets/dashboard-alert-hub.html?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50736 - "GET /frontend/assets/glow.js?v=20260309c HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50736 - "GET /frontend/assets/glow.js?v=20260309c HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59023 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62173 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57124 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50736 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56380 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56380 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56380 - "GET /my-trends/graph HTTP/1.1" 200 OK

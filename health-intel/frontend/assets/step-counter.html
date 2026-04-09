@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Step Counter | P-Cube Health AI</title>
+    <meta
+      name="description"
+      content="Count daily steps, monitor movement over time, and stay active with the P-Cube Health AI step counter."
+    />
+    <meta
+      name="keywords"
+      content="daily step counter, step tracking app, movement tracker, walking activity tracker, P-Cube Health AI"
+    />
+    <meta name="author" content="P-Cube Health AI" />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
+    <meta name="theme-color" content="#2563eb" />
+    <meta property="og:site_name" content="P-Cube Health AI" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Daily Step Counter | P-Cube Health AI" />
+    <meta
+      property="og:description"
+      content="Track daily steps and long-term movement with P-Cube Health AI."
+    />
+    <meta property="og:image" content="pcube_logo.png" />
+    <meta property="og:image:alt" content="P-Cube Health AI logo" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Daily Step Counter | P-Cube Health AI"
+    />
+    <meta
+      name="twitter:description"
+      content="Stay motivated with daily step tracking and movement history."
+    />
+    <meta name="twitter:image" content="pcube_logo.png" />
+    <link rel="icon" href="pcube_logo.png" type="image/png" />
+    <link rel="stylesheet" href="style.css?v=20260312d" />
+    <style>
+      .tool-page {
+        padding-top: 120px;
+        padding-bottom: 80px;
+      }
+      .tool-hero {
+        text-align: center;
+        max-width: 860px;
+        margin: 0 auto 40px;
+      }
+      .tool-hero p {
+        margin: 0 auto 22px;
+        color: #3a5173;
+        max-width: 680px;
+      }
+      .tool-actions {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+      .tracker-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 18px;
+      }
+      .tracker-status {
+        margin: 18px auto 0;
+        max-width: 720px;
+        border-radius: 14px;
+        border: 1px solid #dbe6ff;
+        background: rgba(248, 251, 255, 0.92);
+        padding: 14px 16px;
+        color: #2c3f63;
+      }
+      .panel {
+        border-radius: 20px;
+        border: 1px solid #cfe1ff;
+        background: linear-gradient(
+          165deg,
+          rgba(255, 255, 255, 0.96),
+          rgba(239, 246, 255, 0.92)
+        );
+        box-shadow: 0 18px 40px rgba(30, 64, 175, 0.15);
+        padding: clamp(22px, 3vw, 30px);
+        margin-bottom: 24px;
+      }
+      .stat-grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      }
+      .stat {
+        border-radius: 16px;
+        border: 1px solid #dbe6ff;
+        padding: 16px;
+        background: #f8fbff;
+      }
+      .stat h4 {
+        margin: 0 0 6px;
+        font-size: 0.95rem;
+        color: #2c3f63;
+      }
+      .stat p {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #1e3a8a;
+      }
+      .grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      }
+      .timeline {
+        display: grid;
+        gap: 12px;
+      }
+      .timeline-item {
+        border-radius: 14px;
+        border: 1px solid #dbe6ff;
+        padding: 12px 14px;
+        background: #f8fbff;
+      }
+      .timeline-item.empty {
+        color: #56708f;
+        font-style: italic;
+      }
+      .goal-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+      }
+      .goal-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid #dbe6ff;
+        background: #f8fbff;
+        color: #2d3f5f;
+      }
+      .tag {
+        background: rgba(59, 130, 246, 0.12);
+        color: #1e3a8a;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 0.82rem;
+        font-weight: 600;
+      }
+      @media (max-width: 960px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header" role="banner">
+      <div class="container header-inner">
+        <a
+          class="brand"
+          href="pcube.html?v=20260312d"
+          data-target="pcube.html"
+          aria-label="P-Cube Health AI home"
+        >
+          <img src="pcube_logo.png" alt="P-Cube Health AI logo" class="logo" />
+          <span class="site-name">P-Cube Health AI</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="tool-page">
+      <section class="tool-hero container">
+        <h1>Step Counter (Walking)</h1>
+        <p>
+          Track daily movement, estimate active minutes, and keep your walking
+          goals aligned with your care plan.
+        </p>
+        <div class="tool-actions">
+          <a class="button primary" href="dashboard.html?v=20260312d#interactiveDashboard" data-target="dashboard.html#interactiveDashboard"
+            >View Activity Dashboard</a>
+          <a
+            class="button secondary"
+            href="dashboard.html?v=20260312d#servicesWorkspace"
+            data-target="dashboard.html#servicesWorkspace"
+            >Back to Dashboard</a>
+        </div>
+        <div class="tracker-actions">
+          <button class="button primary" id="startTrackingBtn" type="button">
+            Start Tracking
+          </button>
+          <button class="button secondary" id="stopTrackingBtn" type="button">
+            Stop Tracking
+          </button>
+        </div>
+        <p class="tracker-status" id="motionTrackingStatus">
+          Step count starts at 0 and increases only when this page detects walking motion.
+        </p>
+      </section>
+
+      <section class="container panel">
+        <div class="stat-grid">
+          <div class="stat">
+            <h4>Steps today</h4>
+            <p id="stepsTodayValue">0</p>
+          </div>
+          <div class="stat">
+            <h4>Total steps</h4>
+            <p id="totalStepsValue">0</p>
+          </div>
+          <div class="stat">
+            <h4>Active minutes</h4>
+            <p id="activeMinutesValue">0</p>
+          </div>
+          <div class="stat">
+            <h4>Calories burned</h4>
+            <p id="caloriesBurnedValue">0</p>
+          </div>
+          <div class="stat">
+            <h4>Current streak</h4>
+            <p id="currentStreakValue">0 days</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="container panel grid">
+        <div>
+          <h2>Today's activity</h2>
+          <p id="dailyPatternSummary">
+            No walking activity has been recorded yet. Start tracking and move
+            with your device to begin counting steps.
+          </p>
+          <div class="timeline" id="activityTimeline">
+            <div class="timeline-item empty">
+              Your walk sessions for today will appear here.
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2>Goals</h2>
+          <ul class="goal-list">
+            <li>
+              5,000 steps baseline
+              <span class="tag" id="goalStepsTag">5,000 to go</span>
+            </li>
+            <li>
+              45 active minutes
+              <span class="tag" id="goalMinutesTag">45 min to go</span>
+            </li>
+            <li>
+              7-day streak
+              <span class="tag" id="goalStreakTag">7 days to go</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+    <script src="tool-redirect.js?v=20260312d"></script>
+    <script src="step-counter.js?v=20260407a"></script>
+  </body>
+</html>

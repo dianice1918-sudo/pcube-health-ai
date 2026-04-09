@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: health-intel
+    runtime: docker
+    rootDir: health-intel
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    autoDeployTrigger: commit

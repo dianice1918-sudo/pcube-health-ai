@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>P-Cube Health AI | Location Access</title>
+    <meta
+      name="description"
+      content="Enable regional monitoring for weather, air quality, and outbreak alerts."
+    />
+    <meta
+      name="keywords"
+      content="location permissions, air quality alerts, weather health monitoring, outbreak alerts, P-Cube Health AI"
+    />
+    <meta name="author" content="P-Cube Health AI" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta name="theme-color" content="#2563eb" />
+    <link
+      rel="icon"
+      href="pcube_logo.png"
+      type="image/png"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="dashboard.css?v=20260323c" />
+    <link rel="stylesheet" href="location.css?v=20260323b" />
+  </head>
+  <body class="glow-surface">
+    <header class="header" role="banner">
+      <div class="container header-inner app-header">
+        <a
+          class="brand"
+          href="pcube.html"
+          aria-label="P-Cube Health AI home"
+        >
+          <img
+            src="pcube_logo.png"
+            alt="P-Cube Health AI logo"
+            class="logo"
+          />
+          <span class="site-name">P-Cube Health AI</span>
+        </a>
+        <nav class="top-nav" aria-label="Primary">
+          <a class="nav-item" href="pcube.html"
+            >Home</a
+          >
+          <a
+            class="nav-item active"
+            href="location.html"
+            >Location</a
+          >
+          <a
+            class="nav-item"
+            href="dashboard.html"
+            >Dashboard</a
+          >
+        </nav>
+        <div class="header-right top-actions">
+          <span id="authState" class="chip muted">Authenticated</span>
+          <div class="user-menu">
+            <button
+              id="userMenuBtn"
+              class="user-menu-trigger"
+              type="button"
+              aria-haspopup="menu"
+              aria-expanded="false"
+              aria-controls="userMenuPanel"
+              aria-label="Open user menu"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 12a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Zm0 2.25c-4.42 0-8 2.35-8 5.25 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 0-2.9-3.58-5.25-8-5.25Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+            <div id="userMenuPanel" class="user-menu-panel hidden" role="menu">
+              <label class="theme-control" aria-label="Theme mode">
+                <span class="theme-label">Theme</span>
+                <select
+                  class="theme-select"
+                  data-theme-control
+                  aria-label="Theme mode"
+                >
+                  <option value="system">Auto</option>
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                </select>
+              </label>
+              <a
+                class="menu-link"
+                href="dashboard.html"
+                role="menuitem"
+              >
+                Open Dashboard
+              </a>
+              <button
+                id="logoutBtn"
+                class="menu-link danger"
+                type="button"
+                role="menuitem"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container app-shell">
+      <section class="hero hero-compact">
+        <div class="hero-block">
+          <p class="eyebrow">STEP 2 OF 3</p>
+          <h1 class="glowing-header">Location Permission</h1>
+          <p class="hero-text">
+            Grant location access so P-Cube Health AI can deliver environmental
+            and outbreak guidance for your region. Your exact coordinates stay
+            hidden in the UI.
+          </p>
+        </div>
+      </section>
+
+      <section class="grid grid-2">
+        <article class="card glass">
+          <h3>Location Controls</h3>
+          <p class="note">Allow access once. You can disable it anytime.</p>
+          <div class="inline">
+            <button id="enableLocationBtn" class="button primary" type="button">
+              Enable Location
+            </button>
+            <button id="disableLocationBtn" class="button ghost" type="button">
+              Disable
+            </button>
+          </div>
+          <pre id="locationOut" class="output">
+Location not configured yet.</pre
+          >
+        </article>
+
+        <article class="card glass">
+          <h3>Continue Setup</h3>
+          <p class="note">
+            Proceed to the interactive dashboard after setting (or skipping)
+            permission.
+          </p>
+          <div class="inline">
+            <button
+              id="continueToDashboardBtn"
+              class="button primary"
+              type="button"
+            >
+              Continue To Dashboard
+            </button>
+            <button
+              id="skipToDashboardBtn"
+              class="button secondary"
+              type="button"
+            >
+              Skip For Now
+            </button>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script src="theme.js"></script>
+    <script src="glow.js"></script>
+    <script src="location.js?v=20260408a"></script>
+  </body>
+</html>

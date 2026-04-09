@@ -1,0 +1,3 @@
+Starting FastAPI on http://127.0.0.1:5501 (single-server mode)...
+Scheduler started (risk every 24h, live-intel every 60m)
+INFO:     127.0.0.1:62306 - "GET /healthz HTTP/1.1" 200 OK

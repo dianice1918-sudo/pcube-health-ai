@@ -1,0 +1,2 @@
+Scheduler started (risk every 24h, live-intel every 60m)
+INFO:     127.0.0.1:64833 - "GET /healthz HTTP/1.1" 200 OK

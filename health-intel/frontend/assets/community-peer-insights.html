@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>P-Cube Health AI | Community / Peer Insights</title>
+    <meta
+      name="description"
+      content="Review anonymized health patterns and peer insights inside your P-Cube Health AI workspace."
+    />
+    <meta
+      name="keywords"
+      content="peer health insights, community trends, health analytics, P-Cube Health AI"
+    />
+    <meta name="author" content="P-Cube Health AI" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" href="pcube_logo.png" type="image/png" />
+    <link rel="stylesheet" href="style.css?v=20260323e" />
+    <style>
+      .hidden {
+        display: none !important;
+      }
+      .tool-page {
+        padding-top: 120px;
+        padding-bottom: 80px;
+      }
+      .tool-hero {
+        text-align: center;
+        max-width: 920px;
+        margin: 0 auto 40px;
+      }
+      .tool-hero p {
+        margin: 0 auto 22px;
+        color: #3a5173;
+        max-width: 720px;
+      }
+      .tool-actions {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+      .status-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: rgba(59, 130, 246, 0.12);
+        color: #1e3a8a;
+        font-size: 0.86rem;
+        font-weight: 700;
+      }
+      .status-pill.error {
+        background: #fff1f2;
+        color: #9f1239;
+      }
+      .status-pill.success {
+        background: #ecfdf5;
+        color: #166534;
+      }
+      .panel {
+        border-radius: 20px;
+        border: 1px solid #cfe1ff;
+        background: linear-gradient(
+          165deg,
+          rgba(255, 255, 255, 0.96),
+          rgba(239, 246, 255, 0.92)
+        );
+        box-shadow: 0 18px 40px rgba(30, 64, 175, 0.15);
+        padding: clamp(22px, 3vw, 30px);
+        margin-bottom: 24px;
+      }
+      .grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+      .metric-card {
+        border-radius: 16px;
+        border: 1px solid #dbe6ff;
+        background: rgba(255, 255, 255, 0.82);
+        padding: 16px;
+      }
+      .metric-card .label {
+        display: block;
+        color: #5b7090;
+        margin-bottom: 8px;
+        font-size: 0.85rem;
+      }
+      .metric-card .value {
+        display: block;
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #17325c;
+      }
+      .topic-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+      .topic-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: rgba(59, 130, 246, 0.12);
+        color: #1e3a8a;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+      .insight-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 12px;
+      }
+      .insight-list li {
+        border-radius: 14px;
+        border: 1px solid #dbe6ff;
+        background: rgba(255, 255, 255, 0.82);
+        padding: 14px;
+        color: #2d3f5f;
+      }
+      .insight-list strong {
+        display: block;
+        color: #17325c;
+        margin-bottom: 6px;
+      }
+      .insight-list span {
+        display: block;
+        margin-top: 6px;
+        color: #5f7391;
+        font-size: 0.92rem;
+      }
+      .lock-list {
+        list-style: none;
+        padding: 0;
+        margin: 18px 0 0;
+        display: grid;
+        gap: 10px;
+      }
+      .lock-list li {
+        padding: 12px 14px;
+        border-radius: 14px;
+        border: 1px solid #dbe6ff;
+        background: rgba(255, 255, 255, 0.78);
+        color: #2d3f5f;
+      }
+      .privacy-box {
+        border-radius: 16px;
+        border: 1px solid #dbe6ff;
+        background: #f8fbff;
+        color: #425a7b;
+        padding: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header" role="banner">
+      <div class="container header-inner">
+        <a
+          class="brand"
+          href="pcube.html?v=20260323e"
+          data-target="pcube.html"
+          aria-label="P-Cube Health AI home"
+        >
+          <img src="pcube_logo.png" alt="P-Cube Health AI logo" class="logo" />
+          <span class="site-name">P-Cube Health AI</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="tool-page">
+      <section class="tool-hero container">
+        <h1>Community / Peer Insights</h1>
+        <p>
+          Compare your wellness patterns against anonymized peer trends. This
+          Pro-only workspace highlights shared symptom themes, habit signals,
+          and nutrition patterns without exposing anyone else&apos;s raw records.
+        </p>
+        <div class="status-row">
+          <span id="planStatus" class="status-pill">Checking plan</span>
+        </div>
+        <p id="planMessage">
+          We are checking your subscription level before loading peer insights.
+        </p>
+        <div class="tool-actions">
+          <a
+            class="button primary tool-link"
+            href="dashboard.html?v=20260323e#servicesWorkspace"
+            data-target="dashboard.html#servicesWorkspace"
+            >Back to Dashboard</a
+          >
+          <a
+            class="button secondary tool-link"
+            href="pcube.html?v=20260323e#pricing"
+            data-target="pcube.html#pricing"
+            >View Plans</a
+          >
+        </div>
+      </section>
+
+      <section id="proLockPanel" class="container panel hidden">
+        <h2>Upgrade to Pro to open Community / Peer Insights</h2>
+        <p>
+          This workspace is limited to Pro and Enterprise plans because it
+          relies on anonymized cohort analysis, moderation-minded privacy
+          controls, and richer continuity across user history.
+        </p>
+        <ul class="lock-list">
+          <li>Group-level symptom themes from recent anonymized peer activity.</li>
+          <li>Shared hydration, movement, and wellness trend comparisons.</li>
+          <li>Meal and goal patterns drawn from anonymized nutrition logs.</li>
+          <li>Privacy-first presentation with no names, raw messages, or exact records.</li>
+        </ul>
+      </section>
+
+      <div id="proContent" class="hidden">
+        <section class="container panel">
+          <div class="grid">
+            <div class="metric-card">
+              <span class="label">Peer cohort size</span>
+              <span id="cohortSize" class="value">0</span>
+            </div>
+            <div class="metric-card">
+              <span class="label">Overview</span>
+              <div id="overviewOut" style="color: #2d3f5f;">
+                Peer insight summary will appear here.
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 style="margin-top: 18px;">Matched topics</h3>
+            <div id="matchedTopicsOut" class="topic-pills">
+              <span class="topic-pill">No matched topics yet</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="container grid">
+          <article class="panel">
+            <h2>Habit Trends</h2>
+            <ul id="habitTrendsOut" class="insight-list">
+              <li><strong>Loading</strong>Habit trends will appear here.</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h2>Symptom Patterns</h2>
+            <ul id="symptomPatternsOut" class="insight-list">
+              <li><strong>Loading</strong>Symptom patterns will appear here.</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h2>Nutrition Patterns</h2>
+            <ul id="nutritionPatternsOut" class="insight-list">
+              <li><strong>Loading</strong>Nutrition patterns will appear here.</li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="container panel">
+          <h2>Privacy Note</h2>
+          <div id="privacyOut" class="privacy-box">
+            Privacy guidance will appear here.
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script src="tool-redirect.js?v=20260323e"></script>
+    <script src="community-peer-insights.js?v=20260323b"></script>
+  </body>
+</html>

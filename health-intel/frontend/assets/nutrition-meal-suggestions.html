@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nutrition & Meal Suggestions | P-Cube Health AI</title>
+    <meta
+      name="description"
+      content="Get AI nutrition guidance, symptom-aware meal suggestions, hydration support, and practical recipe ideas from P-Cube Health AI."
+    />
+    <meta
+      name="keywords"
+      content="nutrition AI, meal suggestions, healthy meal planner, symptom-friendly meals, hydration guidance, P-Cube Health AI"
+    />
+    <meta name="author" content="P-Cube Health AI" />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
+    <meta name="theme-color" content="#2563eb" />
+    <meta property="og:site_name" content="P-Cube Health AI" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Nutrition & Meal Suggestions | P-Cube Health AI"
+    />
+    <meta
+      property="og:description"
+      content="Explore AI-powered nutrition guidance, meal ideas, hydration help, and practical recipe support."
+    />
+    <meta property="og:image" content="pcube_logo.png" />
+    <meta property="og:image:alt" content="P-Cube Health AI logo" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Nutrition & Meal Suggestions | P-Cube Health AI"
+    />
+    <meta
+      name="twitter:description"
+      content="Get AI-powered meal suggestions, nutrition guidance, and recipe ideas tailored to your goals."
+    />
+    <meta name="twitter:image" content="pcube_logo.png" />
+    <link rel="icon" href="pcube_logo.png" type="image/png" />
+    <link rel="stylesheet" href="style.css?v=20260323e" />
+    <style>
+      .hidden {
+        display: none !important;
+      }
+      .tool-page {
+        padding-top: 120px;
+        padding-bottom: 80px;
+      }
+      .tool-hero {
+        text-align: center;
+        max-width: 920px;
+        margin: 0 auto 40px;
+      }
+      .tool-hero p {
+        margin: 0 auto 22px;
+        color: #3a5173;
+        max-width: 720px;
+      }
+      .tool-actions {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+      .status-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: rgba(59, 130, 246, 0.12);
+        color: #1e3a8a;
+        font-size: 0.86rem;
+        font-weight: 700;
+      }
+      .status-pill.error {
+        background: #fff1f2;
+        color: #9f1239;
+      }
+      .status-pill.success {
+        background: #ecfdf5;
+        color: #166534;
+      }
+      .status-pill.busy {
+        background: #eff6ff;
+        color: #1d4ed8;
+      }
+      .tool-grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      }
+      .tool-card {
+        border-radius: 20px;
+        border: 1px solid #cfe1ff;
+        background: linear-gradient(
+          165deg,
+          rgba(255, 255, 255, 0.96),
+          rgba(239, 246, 255, 0.92)
+        );
+        box-shadow: 0 18px 40px rgba(30, 64, 175, 0.15);
+        padding: clamp(22px, 3vw, 30px);
+      }
+      .tool-card h2,
+      .tool-card h3 {
+        margin-bottom: 12px;
+      }
+      .section-copy {
+        margin-bottom: 16px;
+        color: #4b5f80;
+      }
+      .form-grid {
+        display: grid;
+        gap: 16px;
+      }
+      .field-group {
+        display: grid;
+        gap: 8px;
+      }
+      .two-col {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      }
+      label {
+        font-weight: 600;
+        color: #1f3560;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        min-height: 46px;
+        border-radius: 12px;
+        border: 1.5px solid #b5d0ff;
+        padding: 10px 14px;
+        font: inherit;
+        background: #fff;
+        color: #0f172a;
+      }
+      textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+      .metric-grid {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        margin-bottom: 18px;
+      }
+      .metric-card {
+        border-radius: 16px;
+        border: 1px solid #dbe6ff;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 14px 16px;
+      }
+      .metric-card .label {
+        display: block;
+        font-size: 0.85rem;
+        color: #5b7090;
+        margin-bottom: 8px;
+      }
+      .metric-card .value {
+        display: block;
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #17325c;
+      }
+      .output-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+      }
+      .output-list li {
+        color: #2d3f5f;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.76);
+        border: 1px solid #dbe6ff;
+      }
+      .planner-wrap {
+        margin-top: 24px;
+      }
+      .planner-lock {
+        border-radius: 18px;
+        border: 1px solid #dbe6ff;
+        background: #f8fbff;
+        padding: 18px;
+      }
+      .planner-lock p {
+        color: #46607f;
+      }
+      .lock-list {
+        list-style: none;
+        padding: 0;
+        margin: 18px 0 0;
+        display: grid;
+        gap: 10px;
+      }
+      .lock-list li {
+        padding: 12px 14px;
+        border-radius: 14px;
+        border: 1px solid #dbe6ff;
+        background: rgba(255, 255, 255, 0.78);
+        color: #2d3f5f;
+      }
+      .panel-grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      }
+      .overview-box {
+        border-radius: 14px;
+        border: 1px solid #dbe6ff;
+        background: #f8fbff;
+        padding: 14px;
+        color: #29415f;
+        white-space: pre-line;
+      }
+      .alert-box {
+        border-radius: 14px;
+        border: 1px solid #fecaca;
+        background: #fff1f2;
+        color: #9f1239;
+        padding: 12px 14px;
+        white-space: pre-line;
+      }
+      .disclaimer {
+        margin-top: 18px;
+        color: #4b5f80;
+        white-space: pre-line;
+      }
+      @media (max-width: 980px) {
+        .tool-grid,
+        .panel-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header" role="banner">
+      <div class="container header-inner">
+        <a
+          class="brand"
+          href="pcube.html?v=20260323e"
+          data-target="pcube.html"
+          aria-label="P-Cube Health AI home"
+        >
+          <img src="pcube_logo.png" alt="P-Cube Health AI logo" class="logo" />
+          <span class="site-name">P-Cube Health AI</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="tool-page">
+      <section class="tool-hero container">
+        <h1>Nutrition / Meal Suggestions</h1>
+        <p>
+          Track calories, water, symptoms, and meal notes for free. Pro unlocks
+          Nutrition AI meal plans with symptom-aware priorities and recipe
+          starters built from your goals and recent health context.
+        </p>
+        <div class="status-row">
+          <span id="planStatus" class="status-pill">Loading</span>
+        </div>
+        <p id="planMessage">
+          We are checking your nutrition summary and plan access.
+        </p>
+        <div class="tool-actions">
+          <a
+            class="button primary tool-link"
+            href="dashboard.html?v=20260323e#servicesWorkspace"
+            data-target="dashboard.html#servicesWorkspace"
+            >Back to Dashboard</a
+          >
+          <a
+            class="button secondary tool-link"
+            href="checker.html?v=20260323e"
+            data-target="checker.html"
+            >Continue from Symptom Checker</a
+          >
+        </div>
+      </section>
+
+      <section class="container tool-grid">
+        <div class="tool-card">
+          <h2>Daily Nutrition Log</h2>
+          <p class="section-copy">
+            Save the basics quickly so the dashboard has real calorie and water
+            data to work with.
+          </p>
+          <form id="nutritionLogForm" class="form-grid">
+            <div class="two-col">
+              <div class="field-group">
+                <label for="meal-type">Meal type</label>
+                <select id="meal-type" name="meal_type">
+                  <option value="">Choose one</option>
+                  <option>Breakfast</option>
+                  <option>Lunch</option>
+                  <option>Dinner</option>
+                  <option>Snack</option>
+                  <option>Hydration check</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="entry-date">Entry date</label>
+                <input id="entry-date" name="entry_date" type="date" />
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="field-group">
+                <label for="calories">Calories</label>
+                <input
+                  id="calories"
+                  name="calories"
+                  type="number"
+                  min="0"
+                  max="8000"
+                  placeholder="e.g. 520"
+                />
+              </div>
+              <div class="field-group">
+                <label for="water-liters">Water (L)</label>
+                <input
+                  id="water-liters"
+                  name="water_liters"
+                  type="number"
+                  min="0"
+                  max="12"
+                  step="0.1"
+                  placeholder="e.g. 0.7"
+                />
+              </div>
+            </div>
+            <div class="field-group">
+              <label for="symptoms">Symptoms or body signals</label>
+              <input
+                id="symptoms"
+                name="symptoms"
+                type="text"
+                placeholder="e.g. low appetite, nausea, afternoon crash"
+              />
+            </div>
+            <div class="field-group">
+              <label for="goals">Goal for this entry</label>
+              <input
+                id="goals"
+                name="goals"
+                type="text"
+                placeholder="e.g. hydration, blood sugar balance, energy"
+              />
+            </div>
+            <div class="field-group">
+              <label for="notes">Notes</label>
+              <textarea
+                id="notes"
+                name="notes"
+                placeholder="What you ate, how it felt, or anything you want Nutrition AI to remember later."
+              ></textarea>
+            </div>
+            <button id="saveNutritionLogBtn" class="button primary" type="submit">
+              Save Nutrition Entry
+            </button>
+          </form>
+        </div>
+
+        <div class="tool-card">
+          <h2>Nutrition Snapshot</h2>
+          <p class="section-copy">
+            These targets update from your recent health signals plus the logs
+            you save here.
+          </p>
+          <div class="metric-grid">
+            <div class="metric-card">
+              <span class="label">Today calories</span>
+              <span id="todayCalories" class="value">0</span>
+            </div>
+            <div class="metric-card">
+              <span class="label">Today water</span>
+              <span id="todayWater" class="value">0.0 L</span>
+            </div>
+            <div class="metric-card">
+              <span class="label">Calorie target</span>
+              <span id="calorieGoal" class="value">2000</span>
+            </div>
+            <div class="metric-card">
+              <span class="label">Water target</span>
+              <span id="waterGoal" class="value">2.0 L</span>
+            </div>
+          </div>
+
+          <h3>Health context</h3>
+          <ul id="healthContextOut" class="output-list">
+            <li>Recent nutrition context will load here.</li>
+          </ul>
+
+          <h3 style="margin-top: 18px;">Recent logs</h3>
+          <ul id="recentLogsOut" class="output-list">
+            <li>No nutrition logs yet. Save your first entry to start building history.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="container planner-wrap">
+        <div id="plannerLock" class="tool-card planner-lock hidden">
+          <h2>Upgrade to Pro for Nutrition AI</h2>
+          <p id="plannerLockMessage">
+            Free includes tracking. Pro unlocks personalized meal planning and
+            recipe suggestions based on symptoms, goals, and your recent health
+            signals.
+          </p>
+          <ul class="lock-list">
+            <li>Meal priorities that adapt to symptoms or wellness goals.</li>
+            <li>Recipe starters matched to your time, budget, and preferences.</li>
+            <li>Watch-out notes for allergies, glucose concerns, and special cases.</li>
+            <li>Deeper continuity with your saved nutrition logs and health context.</li>
+          </ul>
+          <div class="tool-actions" style="margin-top: 20px;">
+            <a
+              class="button primary tool-link"
+              href="pcube.html?v=20260323e#pricing"
+              data-target="pcube.html#pricing"
+              >View Pro Plans</a
+            >
+          </div>
+        </div>
+
+        <div id="plannerContent" class="tool-card hidden">
+          <div class="status-row" style="justify-content: flex-start; margin-bottom: 10px;">
+            <h2 style="margin-bottom: 0;">Nutrition AI Meal Planner</h2>
+            <span id="plannerStatus" class="status-pill">Ready</span>
+          </div>
+          <p id="plannerUsage" class="section-copy">
+            Enter a goal or symptom focus to generate a meal plan.
+          </p>
+
+          <div class="panel-grid">
+            <form id="nutritionPlanForm" class="form-grid">
+              <div class="field-group">
+                <label for="goal">Goal</label>
+                <input
+                  id="goal"
+                  name="goal"
+                  type="text"
+                  placeholder="e.g. improve energy, reduce sugar spikes, gentle meals for nausea"
+                  required
+                />
+              </div>
+              <div class="field-group">
+                <label for="symptom-focus">Symptom or health focus</label>
+                <input
+                  id="symptom-focus"
+                  name="symptom_focus"
+                  type="text"
+                  placeholder="e.g. reflux after meals, low appetite, high glucose"
+                />
+              </div>
+              <div class="two-col">
+                <div class="field-group">
+                  <label for="dietary-preferences">Preferences</label>
+                  <input
+                    id="dietary-preferences"
+                    name="dietary_preferences"
+                    type="text"
+                    placeholder="e.g. vegetarian, high protein"
+                  />
+                </div>
+                <div class="field-group">
+                  <label for="allergies">Allergies</label>
+                  <input
+                    id="allergies"
+                    name="allergies"
+                    type="text"
+                    placeholder="e.g. peanuts, shellfish"
+                  />
+                </div>
+              </div>
+              <div class="two-col">
+                <div class="field-group">
+                  <label for="budget-level">Budget</label>
+                  <select id="budget-level" name="budget_level">
+                    <option value="">Choose one</option>
+                    <option>Budget</option>
+                    <option>Moderate</option>
+                    <option>Flexible</option>
+                  </select>
+                </div>
+                <div class="field-group">
+                  <label for="cooking-time">Cooking time</label>
+                  <select id="cooking-time" name="cooking_time">
+                    <option value="">Choose one</option>
+                    <option>Quick 15 minutes</option>
+                    <option>30 minutes</option>
+                    <option>Batch cooking</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field-group">
+                <label for="planner-notes">Additional notes</label>
+                <textarea
+                  id="planner-notes"
+                  name="additional_notes"
+                  placeholder="Add chronic conditions, foods you want to avoid, taste preferences, or recipe constraints."
+                ></textarea>
+              </div>
+              <button id="generateNutritionPlanBtn" class="button primary" type="submit">
+                Generate Nutrition AI Plan
+              </button>
+            </form>
+
+            <div>
+              <div class="overview-box" id="nutritionOverviewOut">
+                Nutrition AI has not generated a plan yet.
+              </div>
+              <h3 style="margin-top: 18px;">Meal priorities</h3>
+              <ul id="mealPrioritiesOut" class="output-list">
+                <li>Priority guidance will appear here.</li>
+              </ul>
+              <h3 style="margin-top: 18px;">Suggested meals</h3>
+              <ul id="suggestedMealsOut" class="output-list">
+                <li>Meal suggestions will appear here.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3 style="margin-top: 20px;">Recipe ideas</h3>
+          <ul id="recipeIdeasOut" class="output-list">
+            <li>Recipe starters will appear here.</li>
+          </ul>
+
+          <div id="watchoutsOut" class="alert-box" style="margin-top: 18px;">
+            Watch-out notes will appear here.
+          </div>
+
+          <p id="nutritionSafetyOut" class="disclaimer">
+            This tool provides educational nutrition guidance only and does not
+            replace clinician or dietitian advice.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script src="tool-redirect.js?v=20260323e"></script>
+    <script src="nutrition-meal-suggestions.js?v=20260323b"></script>
+  </body>
+</html>

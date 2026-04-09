@@ -1,0 +1,275 @@
+INFO:     127.0.0.1:60027 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56459 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60124 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50693 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50693 - "OPTIONS /login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50693 - "POST /login HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:50693 - "OPTIONS /login/request-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63973 - "POST /register HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63976 - "POST /login HTTP/1.1" 403 Forbidden
+Email send failed to itojejohn129@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:63971 - "POST /login/request-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63971 - "OPTIONS /login/verify-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62710 - "GET /healthz HTTP/1.1" 200 OK
+Email send failed to pitch639113341674819410@example.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:61906 - "POST /login/request-code HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:63296 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51902 - "POST /register HTTP/1.1" 200 OK
+Email send failed to pitch1e758413f4@example.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:63308 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "POST /login HTTP/1.1" 403 Forbidden
+Email send failed to itojejohn129@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:61232 - "POST /login/request-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "POST /login/verify-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58068 - "GET /frontend/assets/glow.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:58068 - "GET /frontend/assets/login.html?v=20260309b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58068 - "GET /users/me/location HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:64305 - "GET /frontend/assets/login.js?v=20260409a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64305 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "GET /frontend/assets/signup.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51545 - "GET /frontend/assets/login.js?v=20260409a HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51545 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59231 - "POST /register HTTP/1.1" 200 OK
+Email send failed to eberevictor2007@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:59231 - "POST /login/request-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59231 - "POST /login/verify-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59231 - "GET /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55680 - "PATCH /users/me/location-permission HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55680 - "PUT /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55304 - "PATCH /users/me/location-permission HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63591 - "PATCH /users/me/location-permission HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57675 - "PATCH /users/me/location-permission HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57675 - "PUT /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49878 - "GET /frontend/assets/glow.js?v=20260309c HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:63591 - "PUT /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50546 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49612 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50546 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55680 - "PATCH /users/me/location-permission HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63591 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60167 - "PATCH /users/me/location-permission HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55304 - "PUT /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55680 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63591 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50546 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55304 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55680 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63591 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55304 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50546 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60167 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60167 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60167 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60167 - "GET /frontend/assets/checker.html?v=20260309b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60167 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50546 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53700 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49612 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49612 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62663 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60167 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59705 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59687 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53036 - "POST /register HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63806 - "POST /chat HTTP/1.1" 200 OK
+Email send failed to pitch58e709e478@example.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:64427 - "POST /register HTTP/1.1" 200 OK
+Email send failed to pitchdd684d3724@example.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:64428 - "POST /login/request-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64431 - "POST /login/verify-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64432 - "POST /chatbot/ask HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65018 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50623 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52347 - "GET /frontend/assets/checker.html?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52347 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54732 - "GET /frontend/assets/dashboard.html?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54374 - "GET /my-risk-history HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:52347 - "GET /chatbot/assistant-files HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:49189 - "GET /my-health HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:53970 - "GET /users/me/dashboard HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:61567 - "GET /my/coach-cards HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63153 - "GET /chatbot/usage HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:58998 - "POST /chatbot/medication-plan HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:53317 - "POST /chatbot/medication-plan HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63142 - "POST /chatbot/medication-plan HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:56059 - "POST /chatbot/medication-plan HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63398 - "POST /chatbot/medication-plan HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:58035 - "POST /chatbot/medication-plan HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58463 - "GET /frontend/assets/checker.html?v=20260323e HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:58463 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58463 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65135 - "GET /frontend/assets/login.html?v=20260323e HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:65135 - "GET /frontend/assets/login.js?v=20260409a HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:65135 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59692 - "POST /login HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:59692 - "GET /frontend/assets/signup.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59692 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49534 - "POST /register HTTP/1.1" 200 OK
+Email send failed to dianice1918@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:49534 - "POST /login/request-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49534 - "POST /login/verify-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49534 - "GET /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60611 - "PATCH /users/me/location-permission HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59372 - "PATCH /users/me/location-permission HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60611 - "PUT /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60611 - "PUT /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57430 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60611 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51869 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61732 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60611 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57430 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60516 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61732 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51869 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60611 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51869 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60516 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61732 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61732 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57430 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60611 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60516 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51869 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61732 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61732 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57430 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61732 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63385 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61732 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63385 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57430 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57430 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57430 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61173 - "GET /frontend/assets/checker.html?v=20260323e HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61173 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61173 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56917 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55972 - "POST /register HTTP/1.1" 200 OK
+Email send failed to medf2a5160924@example.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:55976 - "POST /login/request-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52404 - "POST /login/verify-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55652 - "GET /frontend/assets/checker.html?v=20260309b HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55652 - "GET /frontend/assets/style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55652 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54435 - "POST /chat HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:55652 - "GET /chatbot/assistant-files HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:60580 - "POST /chat HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:64799 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54122 - "POST /chat HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63162 - "POST /chat HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:57469 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65094 - "POST /chatbot/medication-plan HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:49318 - "POST /chatbot/medication-plan HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51253 - "GET /frontend/assets/style.css?v=20260309c HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51253 - "GET /frontend/assets/app.js?v=20260408a HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50511 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56632 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57788 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63702 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52080 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52080 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52080 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65427 - "POST /health-record HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52080 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60045 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65427 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65427 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65427 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60045 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65427 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60952 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49195 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61250 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54338 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54208 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54208 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54208 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60372 - "GET /frontend/assets/checker.html?v=20260309b HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60372 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60372 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65229 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50485 - "GET /frontend/assets/style.css?v=20260323e HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55543 - "GET /frontend/assets/checker.html?v=20260309b HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55228 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55228 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58863 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54661 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64009 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60603 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55228 - "GET /chatbot/assistant-files HTTP/1.1" 502 Bad Gateway
+INFO:     127.0.0.1:49212 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62993 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59062 - "GET /frontend/assets/checker.html?v=20260309b HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59062 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59062 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50713 - "GET /frontend/assets/glow.js?v=20260309c HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60216 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60216 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54014 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65472 - "POST /chatbot/medication-plan HTTP/1.1" 200 OK
+Email send failed to dianice1918@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+Email send failed to dianice1918@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:63109 - "POST /health-record HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64714 - "POST /health-record HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64714 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64714 - "GET /my/coach-cards HTTP/1.1" 200 OK
+Email send failed to dianice1918@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:64714 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65497 - "POST /health-record HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65497 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65497 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65497 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+Email send failed to dianice1918@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:65497 - "GET /my/coach-cards HTTP/1.1" 200 OK
+Email send failed to dianice1918@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:65497 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64714 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65497 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65531 - "POST /health-record HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65497 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50998 - "POST /health-record HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65531 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65497 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64714 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50998 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65497 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50998 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65497 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50998 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65497 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50998 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64714 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65497 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50998 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64714 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65531 - "GET /chatbot/usage HTTP/1.1" 500 Internal Server Error
+Email send failed to dianice1918@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO:     127.0.0.1:52586 - "POST /health-record HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:62779 - "GET /my-risk-history HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63109 - "POST /health-record HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:64845 - "GET /chatbot/usage HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:64702 - "GET /my-risk-history HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:54813 - "GET /my-health HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:65217 - "GET /my-health HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:58783 - "GET /frontend/assets/step-counter.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60260 - "GET /frontend/assets/step-counter.js?v=20260407a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50938 - "GET /frontend/assets/tool-redirect.js?v=20260312d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58783 - "GET /frontend/assets/style.css?v=20260312d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63964 - "GET /frontend/assets/symptom-history.html?v=20260309b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63964 - "GET /frontend/assets/style.css?v=20260407b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55295 - "GET /frontend/assets/tool-redirect.js?v=20260407b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51004 - "GET /frontend/assets/symptom-history.js?v=20260407b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51004 - "GET /chatbot/history HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:53613 - "GET /frontend/assets/nutrition-meal-suggestions.html?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53613 - "GET /frontend/assets/tool-redirect.js?v=20260323e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52963 - "GET /frontend/assets/nutrition-meal-suggestions.js?v=20260323b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53613 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52963 - "GET /nutrition/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58575 - "GET /frontend/assets/checker.html?v=20260323e HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:58575 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58575 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53730 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52644 - "POST /chat HTTP/1.1" 200 OK
