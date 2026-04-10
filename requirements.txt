@@ -1,1 +1,19 @@
--r health-intel/requirements.txt
+fastapi
+uvicorn[standard]
+sqlalchemy>=2.0
+alembic>=1.13
+psycopg2-binary
+python-dotenv
+cryptography
+pydantic
+email-validator
+numpy
+apscheduler
+twilio
+bcrypt==4.0.1
+python-jose
+passlib[bcrypt]==1.7.4
+google-auth
+requests
+httpx
+python-multipart

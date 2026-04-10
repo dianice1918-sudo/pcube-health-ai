@@ -1,22 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
 # Virtual environments
 .venv/
 venv/
 env/
-.env
 
-# Python cache
-__pycache__/
-*.pyc
-*.pyo
+# Environment files
+.env
+.env.*
+health-intel/.env
+health-intel/.env.*
 
 # Logs and temporary files
 *.log
+*.out
+*.err
 health-intel/tmp/
+health-intel/uvicorn*.out
+health-intel/uvicorn*.err
 
-# Render & other
-render.yaml
-*.out.log
-*.err.log
+# Frontend/tooling
+node_modules/
+dist/
+build/
 
-# Large data files (add more if needed)
-*.pdf   # if you don't want to track the PDF
+# OS files
+.DS_Store
+Thumbs.db
