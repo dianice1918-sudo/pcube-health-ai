@@ -4349,3 +4349,8 @@ def admin_rotate_webhook_secret(
     hook.signing_secret = secrets.token_hex(32)
     db.commit()
     return WebhookSecretRotateOut(id=hook.id, signing_secret=hook.signing_secret)
+
+
+@app.get("/{asset_name}", include_in_schema=False)
+def frontend_root_asset(asset_name: str):
+    return _serve_frontend_path(asset_name)
