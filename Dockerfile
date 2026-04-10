@@ -1,26 +1,37 @@
-FROM python:3.12-slim
+FROM python:3.11-slim
 
+# Python runtime settings
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+    PIP_NO_CACHE_DIR=1 \
+    PORT=8000
 
+# Set the application directory
 WORKDIR /app
 
-RUN addgroup --system app && adduser --system --ingroup app app
+# Install build tools and common native dependencies
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /app/health-intel
+# Copy dependency list first for better layer caching
 COPY requirements.txt ./requirements.txt
-RUN pip install --upgrade pip && pip install -r requirements.txt
 
+# Install Python dependencies
+RUN pip install --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
+
+# Copy the full project into the image
 COPY . .
-RUN chown -R app:app /app
 
-USER app
+# Create and use a non-root user for better security
+RUN useradd --create-home --shell /bin/bash appuser \
+    && chown -R appuser:appuser /app
+USER appuser
 
+# Expose the default application port
 EXPOSE 8000
 
-ENV UVICORN_HOST=0.0.0.0 \
-    UVICORN_PORT=8000 \
-    UVICORN_WORKERS=1
+# Start FastAPI with Uvicorn on the Render-provided PORT when available
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
