@@ -61,6 +61,9 @@ function isLocalStaticDevPage() {
 
 function shouldUseSameOriginApi() {
   const explicit = String(localStorage.getItem(SAME_ORIGIN_API_KEY) || "").trim();
+  if (window.location.protocol !== "file:" && !isLocalhostLikeHost(window.location.hostname)) {
+    return true;
+  }
   if (explicit === "1") return !isLocalStaticDevPage();
   if (explicit === "0") return false;
   if (window.location.protocol === "file:") return false;
@@ -466,8 +469,17 @@ function shouldAutoSwitchToBackendHostedPage() {
 function backendHostedFrontendUrl(target) {
   const raw = String(target || "").trim();
   if (!raw || !API_BASE || /^(https?:|mailto:|tel:|#)/i.test(raw)) return raw;
-  const safeTarget = raw.replace(/^\/+/, "").replace(/^frontend\/assets\//i, "");
-  return `${API_BASE}/frontend/assets/${safeTarget}`;
+  const cleanTarget = raw
+    .replace(/^\/+/, "")
+    .replace(/^frontend\/assets\//i, "")
+    .replace(/^assets\//i, "");
+  const [pathname, suffix = ""] = cleanTarget.split(/([?#].*)/, 2);
+  const normalizedPath = String(pathname || "").trim();
+  const routeTarget = normalizedPath.replace(/\.html$/i, "");
+  if (!routeTarget || routeTarget === "pcube" || routeTarget === "index") {
+    return `${API_BASE}/app/${suffix}`;
+  }
+  return `${API_BASE}/app/${routeTarget}${suffix}`;
 }
 
 function backendHostedAuthUrl(page) {
@@ -527,6 +539,13 @@ function setMessage(text, state = "info") {
 function setRedirectingState(target, active) {
   if (!target) return;
   target.classList.toggle("redirecting", Boolean(active));
+}
+
+function setSubmitBusy(target, active, busyLabel, idleLabel) {
+  if (!target) return;
+  target.disabled = Boolean(active);
+  setRedirectingState(target, active);
+  setRedirectLabel(target, active ? busyLabel : idleLabel);
 }
 
 function setRedirectLabel(target, text) {
@@ -655,6 +674,41 @@ function setupNavToggle() {
     navToggle.setAttribute("aria-expanded", String(!expanded));
     primaryNav.classList.toggle("open");
   });
+}
+
+function bindPasswordToggles() {
+  document.querySelectorAll("[data-toggle-password]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const targetId = button.getAttribute("data-toggle-password");
+      const input = targetId ? document.getElementById(targetId) : null;
+      if (!input) return;
+      const reveal = input.type === "password";
+      input.type = reveal ? "text" : "password";
+      button.textContent = reveal ? "Hide" : "Show";
+      button.setAttribute(
+        "aria-label",
+        `${reveal ? "Hide" : "Show"} ${input.name.replace(/_/g, " ")}`,
+      );
+    });
+  });
+}
+
+function validateSignupPayload(payload) {
+  const fullName = String(payload?.full_name || "").trim();
+  const email = String(payload?.email || "").trim();
+  const password = String(payload?.password || "");
+  const confirmPassword = String(payload?.confirm_password || "");
+
+  if (!fullName || !email || !password || !confirmPassword) {
+    return "Full name, email, and both password fields are required.";
+  }
+  if (password !== confirmPassword) {
+    return "Passwords do not match.";
+  }
+  if (password.length < 8 || !/[A-Za-z]/.test(password) || !/\d/.test(password)) {
+    return "Password must be at least 8 characters and include letters and numbers.";
+  }
+  return "";
 }
 
 async function api(path, { method = "GET", body, auth = true } = {}) {
@@ -894,12 +948,17 @@ function bindLoginPage() {
 
   loginForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
-    setRedirectingState(submitBtn, true);
+    setSubmitBusy(submitBtn, true, "Signing in...", "Continue");
     const fd = new FormData(loginForm);
     const credentials = {
       email: String(fd.get("email") || "").trim(),
       password: String(fd.get("password") || ""),
     };
+    if (!credentials.email || !credentials.password) {
+      setSubmitBusy(submitBtn, false, "Signing in...", "Continue");
+      setMessage("Email and password are required.", "error");
+      return;
+    }
     try {
       persistLoginEmail(credentials.email);
       const data = await api("/login", {
@@ -910,7 +969,7 @@ function bindLoginPage() {
       finishLogin(data.access_token, "Sign-in successful. Redirecting...");
     } catch (err) {
       if (!isOtpRequiredError(err)) {
-        setRedirectingState(submitBtn, false);
+        setSubmitBusy(submitBtn, false, "Signing in...", "Continue");
         setMessage(err.message, "error");
         return;
       }
@@ -931,7 +990,7 @@ function bindLoginPage() {
             });
         }, 200);
       } catch (otpErr) {
-        setRedirectingState(submitBtn, false);
+        setSubmitBusy(submitBtn, false, "Signing in...", "Continue");
         setMessage(otpErr.message, "error");
       }
     }
@@ -962,11 +1021,11 @@ function bindOtpPage() {
   if (resendBtn) resendBtn.disabled = !lastLoginCredentials;
 
   verifyBtn?.addEventListener("click", async () => {
-    setRedirectingState(verifyBtn, true);
+    setSubmitBusy(verifyBtn, true, "Verifying...", "Verify Code");
     try {
       await verifyOtpCode();
     } catch (err) {
-      setRedirectingState(verifyBtn, false);
+      setSubmitBusy(verifyBtn, false, "Verifying...", "Verify Code");
       setMessage(err.message, "error");
     }
   });
@@ -996,11 +1055,11 @@ function bindOtpPage() {
     if (event.key !== "Enter") return;
     event.preventDefault();
     if (!validateOtpField()) return;
-    setRedirectingState(verifyBtn, true);
+    setSubmitBusy(verifyBtn, true, "Verifying...", "Verify Code");
     try {
       await verifyOtpCode();
     } catch (err) {
-      setRedirectingState(verifyBtn, false);
+      setSubmitBusy(verifyBtn, false, "Verifying...", "Verify Code");
       setMessage(err.message, "error");
     }
   });
@@ -1011,16 +1070,18 @@ function bindSignupPage() {
   const submitBtn = registerForm?.querySelector(".redirect-action");
   registerForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
-    setRedirectingState(submitBtn, true);
+    setSubmitBusy(submitBtn, true, "Creating account...", "Create account");
     const fd = new FormData(registerForm);
     const payload = {
       full_name: String(fd.get("full_name") || "").trim(),
       email: String(fd.get("email") || "").trim(),
       password: String(fd.get("password") || ""),
+      confirm_password: String(fd.get("confirm_password") || ""),
     };
-    if (!payload.full_name || !payload.email || !payload.password) {
-      setRedirectingState(submitBtn, false);
-      setMessage("Full name, email, and password are required.", "error");
+    const validationError = validateSignupPayload(payload);
+    if (validationError) {
+      setSubmitBusy(submitBtn, false, "Creating account...", "Create account");
+      setMessage(validationError, "error");
       return;
     }
     try {
@@ -1028,7 +1089,11 @@ function bindSignupPage() {
       const registration = await api("/register", {
         method: "POST",
         auth: false,
-        body: payload,
+        body: {
+          full_name: payload.full_name,
+          email: payload.email,
+          password: payload.password,
+        },
       });
       localStorage.removeItem(TOKEN_KEY);
       if (registration.access_token) {
@@ -1062,9 +1127,9 @@ function bindSignupPage() {
           .catch(() => {
             window.location.replace(buildOtpPageUrl("signup"));
           });
-      }, 200);
+        }, 200);
     } catch (err) {
-      setRedirectingState(submitBtn, false);
+      setSubmitBusy(submitBtn, false, "Creating account...", "Create account");
       setMessage(err.message, "error");
     }
   });
@@ -1094,6 +1159,7 @@ async function resolveRememberedSessionTarget() {
 document.addEventListener("DOMContentLoaded", () => {
   const page = String(document.body?.dataset?.page || "").toLowerCase();
   setupNavToggle();
+  bindPasswordToggles();
   bindRedirectLinks();
   const changeApiBaseBtn = document.getElementById("apiBaseChangeBtn");
   changeApiBaseBtn?.addEventListener("click", async () => {

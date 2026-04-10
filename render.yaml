@@ -7,3 +7,38 @@ services:
     dockerContext: .
     healthCheckPath: /healthz
     autoDeployTrigger: commit
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: RUN_STARTUP_SCHEMA_PATCHES
+        value: "false"
+      - key: ENABLE_SCHEDULER
+        value: "false"
+      - key: UVICORN_HOST
+        value: 0.0.0.0
+      - key: UVICORN_WORKERS
+        value: "1"
+      - key: ALLOWED_HOSTS
+        value: pcube-health-ai.onrender.com
+      - key: CORS_ALLOW_ORIGINS
+        value: https://pcube-health-ai.onrender.com
+      - key: FIREBASE_API_KEY
+        value: AIzaSyDgqKBFIBdARG2-qkNjczONnqlTv0kzSCU
+      - key: FIREBASE_AUTH_DOMAIN
+        value: p-cube-f1f60.firebaseapp.com
+      - key: FIREBASE_PROJECT_ID
+        value: p-cube-f1f60
+      - key: FIREBASE_STORAGE_BUCKET
+        value: p-cube-f1f60.firebasestorage.app
+      - key: FIREBASE_MESSAGING_SENDER_ID
+        value: "76836448982"
+      - key: FIREBASE_APP_ID
+        value: 1:76836448982:web:2a32634fb1a82bd5d67777
+      - key: FIREBASE_MEASUREMENT_ID
+        value: G-RZSL83HXMW
+      - key: FIREBASE_VAPID_KEY
+        value: BBHJIusu8RHr9L38SnvGnn1N0YqTDp7xBgLKd4zUZGn6BL4PxXlR5zsTEcOXPtgE2lVDmvDzIgRrA76cRdwvpNI
+      - key: FCM_PROJECT_ID
+        value: p-cube-f1f60
+      - key: FCM_SERVICE_ACCOUNT_JSON
+        value: REPLACE_WITH_FIREBASE_SERVICE_ACCOUNT_JSON

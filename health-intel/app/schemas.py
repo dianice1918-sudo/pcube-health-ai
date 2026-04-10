@@ -352,6 +352,7 @@ class AssistantFilesResponse(BaseModel):
     provider: str
     assistant_name: Optional[str] = None
     upload_enabled: bool = False
+    status_message: Optional[str] = None
     supported_types: List[str] = Field(default_factory=list)
     files: List[AssistantFileOut] = Field(default_factory=list)
 

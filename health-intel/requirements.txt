@@ -10,9 +10,9 @@ email-validator
 numpy
 apscheduler
 twilio
-bcrypt
+bcrypt==4.0.1
 python-jose
-passlib
+passlib[bcrypt]==1.7.4
 google-auth
 requests
 httpx

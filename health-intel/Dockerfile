@@ -13,6 +13,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 RUN chown -R app:app /app
+RUN chmod +x /app/start-render.sh
 
 USER app
 
@@ -20,6 +21,6 @@ EXPOSE 8000
 
 ENV UVICORN_HOST=0.0.0.0 \
     UVICORN_PORT=8000 \
-    UVICORN_WORKERS=2
+    UVICORN_WORKERS=1
 
-CMD ["sh", "-c", "uvicorn app.main:app --host ${UVICORN_HOST} --port ${UVICORN_PORT} --workers ${UVICORN_WORKERS}"]
+CMD ["/app/start-render.sh"]

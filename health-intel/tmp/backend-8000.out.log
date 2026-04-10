@@ -273,3 +273,50 @@ INFO:     127.0.0.1:58575 - "GET /healthz HTTP/1.1" 200 OK
 INFO:     127.0.0.1:58575 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
 INFO:     127.0.0.1:53730 - "POST /chat HTTP/1.1" 200 OK
 INFO:     127.0.0.1:52644 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55855 - "GET /frontend/assets/login.html?v=20260323e HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55855 - "GET /frontend/assets/style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56331 - "GET /frontend/assets/login.js?v=20260409a HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:64764 - "GET /frontend/assets/login.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:64764 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64337 - "POST /login HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:64337 - "POST /login/request-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64337 - "GET /frontend/assets/otp.html?flow=login HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:64337 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59364 - "POST /login/verify-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59364 - "GET /frontend/assets/location.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59364 - "GET /frontend/assets/dashboard.css?v=20260323c HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55860 - "GET /frontend/assets/glow.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55860 - "GET /frontend/assets/location.js?v=20260408a HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55860 - "GET /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55860 - "GET /frontend/assets/dashboard.html?v=20260309b HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55860 - "GET /frontend/assets/style.css?v=20260309c HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59364 - "GET /frontend/assets/glow.js?v=20260309c HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59364 - "GET /frontend/assets/app.js?v=20260408a HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51576 - "GET /my-health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49181 - "GET /my-risk-history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55860 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59364 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59364 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59364 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61376 - "GET /users/me/notifications?status_filter=RESOLVED&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61376 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61376 - "PATCH /users/me/daily-plan/hydrate_goal HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55668 - "GET /my/coach-cards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65388 - "GET /chatbot/usage HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61376 - "GET /users/me/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61376 - "GET /users/me/notifications?status_filter=ALL&limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61376 - "GET /my-trends/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52618 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51050 - "POST /login HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:51050 - "POST /login/request-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51050 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60983 - "POST /login/verify-code HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60983 - "GET /users/me/location HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60983 - "GET /frontend/assets/checker.html?v=20260309b HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60983 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60983 - "GET /chatbot/assistant-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54507 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64517 - "GET /frontend/assets/checker.html?v=20260309b HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:64517 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64517 - "GET /chatbot/assistant-files HTTP/1.1" 502 Bad Gateway

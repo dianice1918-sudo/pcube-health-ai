@@ -7,6 +7,8 @@
   const generatePlanBtn = document.getElementById("generatePlanBtn");
   const planStatus = document.getElementById("planStatus");
   const usageSummary = document.getElementById("usageSummary");
+  const recommendedDrugName = document.getElementById("recommendedDrugName");
+  const recommendedDrugNote = document.getElementById("recommendedDrugNote");
   const overviewOut = document.getElementById("overviewOut");
   const supportiveCareOut = document.getElementById("supportiveCareOut");
   const medicationOptionsOut = document.getElementById("medicationOptionsOut");
@@ -253,8 +255,72 @@
     return sections;
   }
 
+  function extractRecommendedDrug(sections, payload = {}) {
+    const candidates = [
+      { pattern: /\bparacetamol\b/i, label: "Paracetamol" },
+      { pattern: /\bacetaminophen\b/i, label: "Paracetamol (Acetaminophen)" },
+      { pattern: /\bibuprofen\b/i, label: "Ibuprofen" },
+      { pattern: /\bnaproxen\b/i, label: "Naproxen" },
+      { pattern: /\bartemether[-\s]?lumefantrine\b/i, label: "Artemether-Lumefantrine" },
+      { pattern: /\bartesunate\b/i, label: "Artesunate" },
+      { pattern: /\bchloroquine\b/i, label: "Chloroquine" },
+      { pattern: /\bquinine\b/i, label: "Quinine" },
+      { pattern: /\bamoxicillin\b/i, label: "Amoxicillin" },
+      { pattern: /\bomeprazole\b/i, label: "Omeprazole" },
+      { pattern: /\bcetirizine\b/i, label: "Cetirizine" },
+      { pattern: /\bloratadine\b/i, label: "Loratadine" },
+      { pattern: /\bdextromethorphan\b/i, label: "Dextromethorphan" },
+      { pattern: /\bguaifenesin\b/i, label: "Guaifenesin" },
+      { pattern: /\bsaline nasal spray\b/i, label: "Saline Nasal Spray" },
+      { pattern: /\bantacid\b/i, label: "Antacid" },
+    ];
+
+    const optionLines = Array.isArray(sections?.medicationOptions)
+      ? sections.medicationOptions
+      : [];
+    for (const rawLine of optionLines) {
+      const line = cleanOutputText(rawLine, { stripListMarker: true });
+      for (const candidate of candidates) {
+        if (candidate.pattern.test(line)) {
+          return {
+            name: candidate.label,
+            note: line,
+          };
+        }
+      }
+    }
+
+    const complaint = cleanOutputText(payload?.primary_complaint || "").toLowerCase();
+    if (/\bmalaria\b/.test(complaint)) {
+      return {
+        name: "Antimalarial Treatment Required",
+        note: "Malaria usually needs confirmed antimalarial treatment rather than an OTC medicine. Common clinician-selected options may include artemether-lumefantrine depending on test results, severity, pregnancy status, age, and local guidance.",
+      };
+    }
+    if (/\btyphoid\b/.test(complaint)) {
+      return {
+        name: "Prescription Antibiotic Review Needed",
+        note: "Typhoid-like illness should not be treated with a casual OTC medicine alone. Antibiotic choice depends on testing, resistance patterns, and clinician review.",
+      };
+    }
+    if (/\bpneumonia\b/.test(complaint)) {
+      return {
+        name: "Urgent Clinical Treatment Needed",
+        note: "Pneumonia symptoms often need clinician assessment and may require prescription treatment rather than a simple OTC recommendation.",
+      };
+    }
+
+    return {
+      name: "No clear drug identified",
+      note: "The current result did not name one clear medicine strongly enough to highlight here, so review the medication options section below.",
+    };
+  }
+
   function renderPlan(answer, payload) {
     const sections = parseSections(answer);
+    const recommended = extractRecommendedDrug(sections, payload);
+    if (recommendedDrugName) recommendedDrugName.textContent = recommended.name;
+    if (recommendedDrugNote) recommendedDrugNote.textContent = recommended.note;
     const overviewParts = sections.overview.length
       ? sections.overview
       : [answer || "No medication plan returned."];
@@ -383,6 +449,8 @@
       const message =
         error instanceof Error ? error.message : "Medication AI is unavailable.";
       setStatus("Request failed", "error");
+      if (recommendedDrugName) recommendedDrugName.textContent = "No recommendation available";
+      if (recommendedDrugNote) recommendedDrugNote.textContent = message;
       if (overviewOut) overviewOut.textContent = message;
       renderList(
         supportiveCareOut,

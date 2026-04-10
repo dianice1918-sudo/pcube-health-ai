@@ -1,7 +1,8 @@
 param(
   [string]$ApiBase,
   [string]$EnvFile = ".env.production",
-  [switch]$IncludeAI
+  [switch]$IncludeAI,
+  [switch]$SkipProtectedRoutes
 )
 
 $ErrorActionPreference = "Stop"
@@ -12,8 +13,40 @@ if ([string]::IsNullOrWhiteSpace($ApiBase)) {
 
 $scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 
+function Load-EnvFile {
+  param([string]$Path)
+
+  if (-not (Test-Path $Path)) {
+    throw "Env file not found: $Path"
+  }
+
+  $values = @{}
+  foreach ($rawLine in Get-Content -Path $Path) {
+    $line = $rawLine.Trim()
+    if (-not $line -or $line.StartsWith("#")) {
+      continue
+    }
+
+    $pair = $line -split "=", 2
+    if ($pair.Count -ne 2) {
+      continue
+    }
+
+    $values[$pair[0].Trim()] = $pair[1]
+  }
+
+  return $values
+}
+
 & (Join-Path $scriptRoot "validate-production-env.ps1") -EnvFile $EnvFile
-& (Join-Path $scriptRoot "smoke-test.ps1") -ApiBase $ApiBase -IncludeAI:$IncludeAI
+$envMap = Load-EnvFile -Path $EnvFile
+$otpEnabled = [string]$envMap["LOGIN_OTP_ENABLED"]
+$effectiveSkipProtectedRoutes = $SkipProtectedRoutes
+if (-not $effectiveSkipProtectedRoutes -and $otpEnabled.ToLowerInvariant() -eq "true") {
+  $effectiveSkipProtectedRoutes = $true
+}
+
+& (Join-Path $scriptRoot "smoke-test.ps1") -ApiBase $ApiBase -IncludeAI:$IncludeAI -SkipProtectedRoutes:$effectiveSkipProtectedRoutes
 
 Write-Host ""
 Write-Host "Manual live verification still required for enabled external integrations:"

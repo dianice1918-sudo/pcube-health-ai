@@ -5,7 +5,7 @@ import time
 import requests
 import urllib.error
 import urllib.request
-from typing import Any
+from typing import Any, Iterator
 
 from app.env import load_app_env
 
@@ -37,6 +37,9 @@ def _build_system_prompt(assistant: str = "general") -> str:
             "and never replace a clinician or pharmacist. Always consider allergies, current medications, age context, "
             "and the possibility that urgent care may be safer than self-treatment. "
             "Prefer supportive care and common non-prescription options when appropriate. "
+            "Do not keep defaulting to only acetaminophen or ibuprofen. Match suggestions to the symptom pattern when it is reasonable to do so. "
+            "When appropriate, consider categories such as antihistamines, saline nasal spray, throat lozenges, cough suppressants, expectorants, antacids, oral rehydration support, or reflux medicines. "
+            "If you mention pain relievers, explain when acetaminophen may be preferred and when ibuprofen may be unsuitable because of stomach, kidney, bleeding, pregnancy, or blood-pressure concerns. "
             "If you mention medication ideas, keep them general, note that label directions and local clinician advice take priority, "
             "and warn the user to confirm suitability in pregnancy, kidney disease, liver disease, ulcers, bleeding risk, and blood-pressure concerns. "
             "Format the answer with these headings exactly on their own lines: "
@@ -454,7 +457,9 @@ def build_fallback_medication_answer(
         options.extend(
             [
                 "Acetaminophen may be considered for pain or fever if you are not allergic and do not have liver-related restrictions. Follow the package label.",
+                "Ibuprofen may be considered for pain or migraine-type discomfort in some adults, but avoid it if you have stomach ulcer risk, kidney disease, bleeding risk, certain blood-pressure concerns, or pregnancy-related restrictions unless a clinician says it is safe.",
                 "If the problem seems migraine-like, reducing light, noise, and screen time can matter as much as medicine.",
+                "For migraine-type symptoms, some people also ask a pharmacist about caffeine-containing headache products, but those are not ideal for everyone and may worsen palpitations, anxiety, or blood-pressure issues.",
             ]
         )
         avoid.append("Avoid combining multiple pain relievers unless a clinician or pharmacist has confirmed that it is safe.")
@@ -471,7 +476,9 @@ def build_fallback_medication_answer(
             [
                 "Saline nasal spray or rinse may help congestion without major medication interaction concerns.",
                 "Simple throat lozenges may help throat discomfort if they are safe for you to use.",
-                "Some cough or cold medicines can help, but the exact choice depends on blood pressure, age, and your other medicines.",
+                "If sneezing or a runny nose is a big part of the problem, a pharmacist may suggest a non-drowsy antihistamine such as cetirizine or loratadine when appropriate.",
+                "If mucus is thick and chesty, an expectorant such as guaifenesin may be considered if it is suitable for you.",
+                "If the cough is dry and irritating, some adults ask about dextromethorphan-based cough products, but it should be checked against your current medicines.",
             ]
         )
         avoid.append("Use extra caution with decongestants if you have high blood pressure, heart concerns, or stimulant sensitivity.")
@@ -486,7 +493,9 @@ def build_fallback_medication_answer(
         )
         options.extend(
             [
-                "Depending on the exact symptom, simple antacid or reflux-relief products may help, but they should be checked against your current medicines.",
+                "For reflux or heartburn-type symptoms, a simple antacid may help some people, while others ask about acid-reducing options such as omeprazole when symptoms are recurring and a clinician or pharmacist agrees it fits.",
+                "For diarrhea without red-flag symptoms, oral rehydration support is often more important than medicine at first.",
+                "Some people ask about loperamide for diarrhea, but it should be avoided if there is blood in stool, high fever, or significant abdominal pain.",
                 "For nausea or diarrhea, avoid self-treating aggressively until you are sure there is no fever, blood, or severe abdominal pain.",
             ]
         )
@@ -822,6 +831,108 @@ def _http_post_json(
     raise RuntimeError(f"LLM request failed: {last_error}")
 
 
+def _chunk_text_for_stream(text: str, chunk_size: int = 36) -> Iterator[str]:
+    words = str(text or "").split()
+    if not words:
+        return
+    chunk: list[str] = []
+    current_len = 0
+    for word in words:
+        projected = current_len + len(word) + (1 if chunk else 0)
+        if chunk and projected > chunk_size:
+            yield " ".join(chunk) + " "
+            chunk = [word]
+            current_len = len(word)
+            continue
+        chunk.append(word)
+        current_len = projected
+    if chunk:
+        yield " ".join(chunk)
+
+
+def _extract_stream_text(content: Any) -> str:
+    if isinstance(content, str):
+        return content
+    if not isinstance(content, list):
+        return ""
+    parts: list[str] = []
+    for item in content:
+        if isinstance(item, dict):
+            text = item.get("text")
+            if isinstance(text, str) and text:
+                parts.append(text)
+                continue
+            if item.get("type") == "text":
+                nested = item.get("text")
+                if isinstance(nested, str) and nested:
+                    parts.append(nested)
+    return "".join(parts)
+
+
+def _stream_openai(
+    *,
+    question: str,
+    context: dict[str, Any],
+    history: list[dict[str, str]],
+    assistant: str = "general",
+    timeout_seconds: float | None = None,
+) -> tuple[Iterator[str], str]:
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise RuntimeError("OPENAI_API_KEY is missing. Configure it in environment variables.")
+
+    model = os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini")
+    api_base = os.getenv("OPENAI_API_BASE", "https://api.openai.com/v1/chat/completions")
+    messages = _openai_messages(question, context, history, None, None, assistant)
+    payload = {
+        "model": model,
+        "messages": messages,
+        "temperature": 0.3,
+        "max_tokens": int(os.getenv("OPENAI_CHAT_MAX_TOKENS", "500")),
+        "stream": True,
+    }
+
+    def iterator() -> Iterator[str]:
+        try:
+            session = requests.Session()
+            session.trust_env = False
+            with session.post(
+                api_base,
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {api_key}",
+                },
+                json=payload,
+                stream=True,
+                timeout=(5, timeout_seconds or LLM_REQUEST_TIMEOUT_SECONDS),
+            ) as response:
+                if response.status_code >= 400:
+                    detail = response.text
+                    raise RuntimeError(f"LLM request failed: HTTP {response.status_code} {detail}")
+                for raw_line in response.iter_lines(decode_unicode=True):
+                    line = str(raw_line or "").strip()
+                    if not line or not line.startswith("data:"):
+                        continue
+                    data = line[5:].strip()
+                    if not data or data == "[DONE]":
+                        continue
+                    try:
+                        payload_item = json.loads(data)
+                    except json.JSONDecodeError:
+                        continue
+                    choices = payload_item.get("choices") or []
+                    if not choices:
+                        continue
+                    delta = choices[0].get("delta") or {}
+                    text = _extract_stream_text(delta.get("content"))
+                    if text:
+                        yield text
+        except requests.RequestException as exc:
+            raise RuntimeError(f"LLM request failed: {exc}") from exc
+
+    return iterator(), model
+
+
 def _ask_openai(
     *,
     question: str,
@@ -1001,7 +1112,7 @@ def _ask_pinecone(
 def _provider_candidates(preferred: str) -> list[str]:
     preferred = (preferred or "").strip().lower()
     if preferred in {"pinecone", "assistant"}:
-        return ["pinecone"]
+        return ["pinecone", "openai", "xai", "ollama"]
 
     ordered: list[str] = []
     for candidate in [preferred, "pinecone", "openai", "xai", "ollama"]:
@@ -1110,3 +1221,27 @@ def ask_llm(
     if last_error is not None:
         raise RuntimeError(f"AI request failed after trying available providers: {last_error}") from last_error
     raise RuntimeError("No AI provider is configured.")
+
+
+def stream_llm_response(
+    *,
+    question: str,
+    context: dict[str, Any],
+    history: list[dict[str, str]],
+    assistant: str = "general",
+) -> tuple[Iterator[str], str | None, bool]:
+    try:
+        answer, model, _prompt_tokens, _completion_tokens = ask_llm(
+            question=question,
+            context=context,
+            history=history,
+            assistant=assistant,
+        )
+        return _chunk_text_for_stream(answer), model, False
+    except Exception as exc:
+        fallback_answer = build_fallback_chat_answer(
+            question=question,
+            context=context,
+            failure_reason=str(exc),
+        )
+        return _chunk_text_for_stream(fallback_answer), "local-fallback", True

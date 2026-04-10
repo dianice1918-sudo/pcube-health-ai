@@ -93,13 +93,45 @@
 
               <div class="field-group">
                 <label for="register-password">Password</label>
-                <input
-                  id="register-password"
-                  type="password"
-                  name="password"
-                  placeholder="Create a password"
-                  required
-                />
+                <div class="password-field">
+                  <input
+                    id="register-password"
+                    type="password"
+                    name="password"
+                    placeholder="Create a password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    data-toggle-password="register-password"
+                    aria-label="Show password"
+                  >
+                    Show
+                  </button>
+                </div>
+                <p class="field-hint">Use at least 8 characters with letters and numbers.</p>
+              </div>
+
+              <div class="field-group">
+                <label for="register-confirm-password">Confirm password</label>
+                <div class="password-field">
+                  <input
+                    id="register-confirm-password"
+                    type="password"
+                    name="confirm_password"
+                    placeholder="Repeat your password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    data-toggle-password="register-confirm-password"
+                    aria-label="Show confirm password"
+                  >
+                    Show
+                  </button>
+                </div>
               </div>
 
               <button type="submit" class="btn redirect-action">

@@ -71,6 +71,9 @@ function isLocalStaticDevPage() {
 
 function shouldUseSameOriginApi() {
   const explicit = String(localStorage.getItem(SAME_ORIGIN_API_KEY) || "").trim();
+  if (window.location.protocol !== "file:" && !isLocalhostLikeHost(window.location.hostname)) {
+    return true;
+  }
   if (explicit === "1") return true;
   if (explicit === "0") return false;
   if (window.location.protocol === "file:") return false;
@@ -309,6 +312,12 @@ const openFreeToolsBtn = document.getElementById("openFreeToolsBtn");
 const openProToolsBtn = document.getElementById("openProToolsBtn");
 const welcomeTitle = document.getElementById("welcomeTitle");
 const welcomeSubtitle = document.getElementById("welcomeSubtitle");
+
+function getFirebasePushBridge() {
+  const bridge = window.PCubeFirebasePush;
+  if (!bridge || typeof bridge.getBrowserPushToken !== "function") return null;
+  return bridge;
+}
 
 const heroRiskMini = document.getElementById("heroRiskMini");
 const heroForecastMini = document.getElementById("heroForecastMini");
@@ -1983,13 +1992,32 @@ wearableSyncForm?.addEventListener("submit", async (e) => {
 pushTokenForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const fd = new FormData(pushTokenForm);
+  let pushToken = String(fd.get("push_token") || "").trim();
+  let platform = String(fd.get("platform") || "").trim();
+  const bridge = getFirebasePushBridge();
+  if (!pushToken && bridge) {
+    if (!platform) platform = "web";
+    if (pushOut) {
+      pushOut.textContent =
+        "Requesting browser permission to register this device for push notifications...";
+    }
+    pushToken = String(await bridge.getBrowserPushToken()).trim();
+  }
   const body = {
     provider: String(fd.get("provider") || "fcm").trim(),
-    platform: String(fd.get("platform") || "").trim(),
-    push_token: String(fd.get("push_token") || "").trim(),
+    platform,
+    push_token: pushToken,
   };
   const label = String(fd.get("device_label") || "").trim();
   if (label) body.device_label = label;
+  if (!body.push_token) {
+    if (pushOut) {
+      pushOut.textContent =
+        "Enter a push token manually, or configure Firebase Web Push so the browser can register one automatically.";
+    }
+    return;
+  }
+  if (!body.platform) body.platform = "web";
   try {
     if (pushOut)
       pushOut.textContent = pretty(

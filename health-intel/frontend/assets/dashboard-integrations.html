@@ -331,16 +331,19 @@
                 <input
                   type="text"
                   name="platform"
-                  placeholder="android/web"
+                  value="web"
                   required
                 />
               </label>
               <label
-                >Push Token <input type="text" name="push_token" required
+                >Push Token <input type="text" name="push_token"
               /></label>
               <label
                 >Device Label <input type="text" name="device_label"
               /></label>
+              <p class="note">
+                Leave Push Token blank to let the browser register itself with Firebase Web Push.
+              </p>
               <button class="button secondary" type="submit">
                 Register Push Token
               </button>
@@ -389,6 +392,8 @@
 
     <script src="theme.js?v=20260309c"></script>
     <script src="glow.js?v=20260309c"></script>
+    <script src="/firebase-config.js"></script>
+    <script type="module" src="firebase-push.js?v=20260410a"></script>
     <script src="app.js?v=20260408a"></script>
   </body>
 </html>

@@ -18,7 +18,7 @@ from typing import List
 
 from fastapi import FastAPI, Depends, HTTPException, Request, Header, Response, UploadFile, File, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.gzip import GZipMiddleware
 from starlette.middleware.trustedhost import TrustedHostMiddleware
@@ -121,8 +121,12 @@ from app.services.alert_dispatcher import process_risk_alert
 from app.services.email_service import send_email
 from app.services.llm_chat import (
     ask_llm,
+    build_fallback_chat_answer,
+    build_fallback_medication_answer,
+    build_fallback_nutrition_answer,
     list_pinecone_assistant_files,
     pinecone_supported_file_extensions,
+    stream_llm_response,
     upload_pinecone_assistant_file,
 )
 from app.services.live_intel import collect_live_intel, fetch_weather_and_air
@@ -171,9 +175,12 @@ app = FastAPI(
 logger = logging.getLogger("pcube")
 logging.basicConfig(level=logging.INFO)
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
+FRONTEND_ASSETS_DIR = FRONTEND_DIR / "assets"
 
 if FRONTEND_DIR.exists():
     app.mount("/frontend", StaticFiles(directory=str(FRONTEND_DIR)), name="frontend")
+if FRONTEND_ASSETS_DIR.exists():
+    app.mount("/assets", StaticFiles(directory=str(FRONTEND_ASSETS_DIR)), name="assets")
 
 RATE_LIMIT_PER_MINUTE = int(os.getenv("RATE_LIMIT_PER_MINUTE", "120"))
 ENABLE_DEMO_TOOLS = os.getenv("ENABLE_DEMO_TOOLS", "false").strip().lower() in {"1", "true", "yes", "on"}
@@ -219,6 +226,8 @@ LOGIN_OTP_REQUIRED_DETAIL = "OTP verification required for this account. Use /lo
 PRIORITY_USER_EMAILS = {"dianice1918@gmail.com"}
 PRIORITY_USER_CHAT_LIMIT = 5000
 PRIORITY_USER_IMAGE_CHAT_LIMIT = 500
+ADMIN_USER_CHAT_LIMIT = 5000
+ADMIN_USER_IMAGE_CHAT_LIMIT = 500
 
 if ALLOWED_HOSTS and "*" not in ALLOWED_HOSTS:
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=ALLOWED_HOSTS)
@@ -285,6 +294,11 @@ def _effective_chat_limits(tenant: Tenant, user: User) -> tuple[int, int]:
     base_chat_limit = int(tenant.monthly_chat_limit or 0)
     base_image_limit = int(tenant.monthly_image_chat_limit or 0)
     email = (getattr(user, "email", "") or "").strip().lower()
+    if _is_admin(user):
+        return (
+            max(base_chat_limit, ADMIN_USER_CHAT_LIMIT),
+            max(base_image_limit, ADMIN_USER_IMAGE_CHAT_LIMIT),
+        )
     if email in PRIORITY_USER_EMAILS:
         return (
             max(base_chat_limit, PRIORITY_USER_CHAT_LIMIT),
@@ -834,6 +848,9 @@ def _build_medication_plan_prompt(payload: MedicationPlanRequest) -> str:
     lines.append(
         "Keep the response practical, safety-first, and educational. Mention when to seek urgent or same-day care."
     )
+    lines.append(
+        "Do not default to only acetaminophen or ibuprofen. Suggest symptom-matched non-prescription options when appropriate, and explain why each option fits or does not fit this case."
+    )
     return "\n".join(lines)
 
 
@@ -1354,7 +1371,7 @@ def shutdown_background_tasks():
 
 @app.get("/")
 def root():
-    return RedirectResponse(url="/app/login", status_code=307)
+    return FileResponse(str(FRONTEND_ASSETS_DIR / "pcube.html"))
 
 
 @app.get("/healthz", tags=["system"])
@@ -1368,6 +1385,104 @@ def healthz():
     }
 
 
+def _firebase_web_config() -> dict[str, str]:
+    return {
+        "apiKey": (os.getenv("FIREBASE_API_KEY") or "").strip(),
+        "authDomain": (os.getenv("FIREBASE_AUTH_DOMAIN") or "").strip(),
+        "projectId": (
+            (os.getenv("FIREBASE_PROJECT_ID") or "").strip()
+            or (os.getenv("FCM_PROJECT_ID") or "").strip()
+        ),
+        "storageBucket": (os.getenv("FIREBASE_STORAGE_BUCKET") or "").strip(),
+        "messagingSenderId": (os.getenv("FIREBASE_MESSAGING_SENDER_ID") or "").strip(),
+        "appId": (os.getenv("FIREBASE_APP_ID") or "").strip(),
+        "measurementId": (os.getenv("FIREBASE_MEASUREMENT_ID") or "").strip(),
+    }
+
+
+@app.get("/firebase-config.js", include_in_schema=False)
+def firebase_config_js():
+    payload = _firebase_web_config()
+    vapid_key = (os.getenv("FIREBASE_VAPID_KEY") or "").strip()
+    body = (
+        f"window.PCUBE_FIREBASE_CONFIG = {json.dumps(payload)};\n"
+        f"window.PCUBE_FIREBASE_VAPID_KEY = {json.dumps(vapid_key)};\n"
+    )
+    return Response(content=body, media_type="application/javascript; charset=utf-8")
+
+
+@app.get("/firebase-messaging-sw.js", include_in_schema=False)
+def firebase_messaging_sw():
+    config_json = json.dumps(_firebase_web_config())
+    body = f"""
+importScripts("https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js");
+
+firebase.initializeApp({config_json});
+
+const messaging = firebase.messaging();
+
+messaging.onBackgroundMessage(function (payload) {{
+  const notification = payload && payload.notification ? payload.notification : {{}};
+  const title = notification.title || "P-Cube Health AI";
+  const options = {{
+    body: notification.body || "You have a new health alert.",
+    icon: "/assets/pcube_logo.png",
+    badge: "/assets/pcube_logo.png",
+    data: payload && payload.data ? payload.data : {{}},
+  }};
+  self.registration.showNotification(title, options);
+}});
+
+self.addEventListener("notificationclick", function (event) {{
+  event.notification.close();
+  event.waitUntil(
+    clients.matchAll({{ type: "window", includeUncontrolled: true }}).then(function (clientList) {{
+      for (const client of clientList) {{
+        if (client.url && client.url.includes("/app")) {{
+          return client.focus();
+        }}
+      }}
+      return clients.openWindow("/app/");
+    }})
+  );
+}});
+"""
+    return Response(content=body.strip() + "\n", media_type="application/javascript; charset=utf-8")
+
+
+@app.get("/robots.txt", include_in_schema=False)
+def robots_txt():
+    body = "\n".join(
+        [
+            "User-agent: *",
+            "Allow: /",
+            "Sitemap: https://pcube-health-ai.onrender.com/sitemap.xml",
+            "",
+        ]
+    )
+    return Response(content=body, media_type="text/plain; charset=utf-8")
+
+
+@app.get("/sitemap.xml", include_in_schema=False)
+def sitemap_xml():
+    body = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://pcube-health-ai.onrender.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://pcube-health-ai.onrender.com/checker.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>
+"""
+    return Response(content=body, media_type="application/xml; charset=utf-8")
+
+
 @app.get("/readyz", tags=["system"])
 def readyz(db: Session = Depends(get_db)):
     try:
@@ -1378,50 +1493,57 @@ def readyz(db: Session = Depends(get_db)):
 
 
 def _serve_frontend_asset(asset_name: str) -> FileResponse:
-    file_path = FRONTEND_DIR / "assets" / asset_name
+    file_path = FRONTEND_ASSETS_DIR / asset_name
     if not file_path.exists():
         raise HTTPException(status_code=404, detail=f"Frontend asset not found: {asset_name}")
     return FileResponse(str(file_path))
 
 
+def _resolve_frontend_path(asset_path: str | None) -> str:
+    requested = str(asset_path or "").strip().lstrip("/")
+    if not requested:
+        requested = "pcube.html"
+
+    normalized_path = Path(requested)
+    if normalized_path.is_absolute() or ".." in normalized_path.parts:
+        raise HTTPException(status_code=404, detail="Invalid frontend path")
+
+    direct_match = FRONTEND_ASSETS_DIR / normalized_path
+    if direct_match.exists() and direct_match.is_file():
+        return str(normalized_path).replace("\\", "/")
+
+    if normalized_path.suffix:
+        raise HTTPException(status_code=404, detail=f"Frontend asset not found: {requested}")
+
+    html_candidate = FRONTEND_ASSETS_DIR / f"{requested}.html"
+    if html_candidate.exists() and html_candidate.is_file():
+        return f"{requested}.html"
+
+    raise HTTPException(status_code=404, detail=f"Frontend asset not found: {requested}")
+
+
+def _serve_frontend_path(asset_path: str | None = None) -> FileResponse:
+    return _serve_frontend_asset(_resolve_frontend_path(asset_path))
+
+
 @app.get("/app", include_in_schema=False)
+@app.get("/app/", include_in_schema=False)
 def frontend_app():
-    return RedirectResponse(url="/frontend/assets/pcube.html", status_code=307)
+    return _serve_frontend_path()
 
 
-@app.get("/app/login", include_in_schema=False)
-def frontend_login_page():
-    return RedirectResponse(url="/frontend/assets/login.html", status_code=307)
+@app.get("/app/{asset_path:path}", include_in_schema=False)
+def frontend_page_or_asset(asset_path: str):
+    return _serve_frontend_path(asset_path)
 
 
-@app.get("/app/signup", include_in_schema=False)
-def frontend_signup_page():
-    return RedirectResponse(url="/frontend/assets/signup.html", status_code=307)
+@app.get("/{page_name}.html", include_in_schema=False)
+def frontend_legacy_html_page(page_name: str):
+    return _serve_frontend_path(f"{page_name}.html")
 
 
-@app.get("/app/otp", include_in_schema=False)
-def frontend_otp_page():
-    return RedirectResponse(url="/frontend/assets/otp.html", status_code=307)
-
-
-@app.get("/app/checker", include_in_schema=False)
-def frontend_checker_page():
-    return RedirectResponse(url="/frontend/assets/checker.html", status_code=307)
-
-
-@app.get("/app/location", include_in_schema=False)
-def frontend_location_page():
-    return RedirectResponse(url="/frontend/assets/location.html", status_code=307)
-
-
-@app.get("/app/dashboard", include_in_schema=False)
-def frontend_dashboard_page():
-    return RedirectResponse(url="/frontend/assets/dashboard.html", status_code=307)
-
-
-@app.get("/app/auth", include_in_schema=False)
-def frontend_auth_page():
-    return RedirectResponse(url="/frontend/assets/index.html", status_code=307)
+def _normalize_email(email: str) -> str:
+    return str(email or "").strip().lower()
 
 
 def _mask_email(email: str) -> str:
@@ -1453,7 +1575,9 @@ def _hash_login_code(challenge_id: str, code: str) -> str:
 
 @app.post("/register")
 def register(user: UserCreate, db: Session = Depends(get_db)):
-    if not user.full_name.strip():
+    email = _normalize_email(user.email)
+    full_name = (user.full_name or "").strip()
+    if not full_name:
         raise HTTPException(status_code=400, detail="Full name is required")
     password = user.password or ""
     if len(password) < 8 or not any(ch.isdigit() for ch in password) or not any(ch.isalpha() for ch in password):
@@ -1462,7 +1586,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
             detail="Password must be at least 8 characters and include letters and numbers",
         )
     try:
-        existing = db.query(User).filter(User.email == user.email).first()
+        existing = db.query(User).filter(func.lower(User.email) == email).first()
     except OperationalError:
         raise HTTPException(status_code=503, detail="Database unavailable. Check database configuration.")
     if existing:
@@ -1470,8 +1594,8 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
     tenant = _resolve_tenant(db, user.tenant_name)
     new_user = User(
-        email=user.email,
-        full_name=user.full_name,
+        email=email,
+        full_name=full_name,
         password_hash=hash_password(user.password),
         tenant_id=tenant.id,
         login_otp_required=bool(LOGIN_OTP_ENABLED),
@@ -1504,18 +1628,27 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
 
 def _authenticate_user_credentials(user: UserLogin, db: Session) -> User:
+    normalized_email = _normalize_email(user.email)
     try:
-        db_user = db.query(User).filter(User.email == user.email).first()
+        db_user = db.query(User).filter(func.lower(User.email) == normalized_email).first()
     except OperationalError:
         raise HTTPException(status_code=503, detail="Database unavailable. Check database configuration.")
     if not db_user:
+        logger.info("Login failed: user not found for email=%s", normalized_email)
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
     try:
         password_ok = verify_password(user.password, db_user.password_hash)
     except Exception as exc:
-        logger.warning("Password verification failed for user_id=%s: %s", db_user.id, exc)
+        logger.warning(
+            "Password verification errored for user_id=%s email=%s hash_prefix=%s: %s",
+            db_user.id,
+            normalized_email,
+            str(db_user.password_hash or "")[:8],
+            exc,
+        )
         password_ok = False
     if not password_ok:
+        logger.info("Login failed: password mismatch for user_id=%s email=%s", db_user.id, normalized_email)
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
     return db_user
 
@@ -2276,6 +2409,7 @@ def chatbot_assistant_files(current_user: User = Depends(get_current_user)):
             provider=provider or "openai",
             assistant_name=assistant_name,
             upload_enabled=False,
+            status_message="Document uploads are disabled for the current AI provider.",
             supported_types=supported_types,
             files=[],
         )
@@ -2284,17 +2418,22 @@ def chatbot_assistant_files(current_user: User = Depends(get_current_user)):
         files = list_pinecone_assistant_files()
     except RuntimeError as exc:
         logger.warning("Assistant file list unavailable for user_id=%s: %s", current_user.id, exc)
-        raise HTTPException(
-            status_code=502,
-            detail=_public_provider_error_message(
-                "Document uploads are temporarily unavailable. Please try again later."
+        return AssistantFilesResponse(
+            provider="pinecone",
+            assistant_name=assistant_name,
+            upload_enabled=False,
+            status_message=_public_provider_error_message(
+                "Document uploads are temporarily unavailable. Chat will keep using the fallback AI provider."
             ),
+            supported_types=supported_types,
+            files=[],
         )
 
     return AssistantFilesResponse(
         provider="pinecone",
         assistant_name=assistant_name,
         upload_enabled=True,
+        status_message="Document uploads are available.",
         supported_types=supported_types,
         files=[_assistant_file_out(item) for item in files],
     )
@@ -2382,6 +2521,7 @@ def chatbot_ask(
         history.append({"role": "assistant", "content": item.answer})
 
     context = _build_chat_context(db, current_user)
+    used_fallback = False
     try:
         answer, model_used, prompt_tokens, completion_tokens = ask_llm(
             question=question,
@@ -2395,10 +2535,15 @@ def chatbot_ask(
             tenant.id,
             e,
         )
-        raise HTTPException(
-            status_code=502,
-            detail="Pinecone chat is unavailable right now. Please try again in a moment.",
-        ) from e
+        answer = build_fallback_chat_answer(
+            question=question,
+            context=context,
+            failure_reason=str(e),
+        )
+        model_used = "local-fallback"
+        prompt_tokens = None
+        completion_tokens = None
+        used_fallback = True
 
     msg = ChatMessage(
         tenant_id=tenant.id,
@@ -2413,7 +2558,7 @@ def chatbot_ask(
     db.add(msg)
     db.commit()
 
-    used_after = used + 1
+    used_after = used + (0 if used_fallback else 1)
     remaining = max(limit - used_after, 0)
     return ChatAskResponse(
         answer=answer,
@@ -2443,6 +2588,142 @@ def chat_loop(
         response=result.answer,
         llm_model=result.llm_model,
         remaining=result.remaining,
+    )
+
+
+@app.post("/chat/stream")
+def chat_stream(
+    payload: ChatLoopRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    message = payload.message.strip()
+    if not message:
+        raise HTTPException(status_code=400, detail="Message is required")
+
+    tenant = db.query(Tenant).filter(Tenant.id == current_user.tenant_id).first()
+    if not tenant:
+        raise HTTPException(status_code=400, detail="User tenant is not configured")
+
+    used = _monthly_chat_usage(db, tenant.id, current_user.id)
+    limit, image_limit = _effective_chat_limits(tenant, current_user)
+    if used >= limit:
+        raise HTTPException(status_code=429, detail="Monthly chatbot limit reached for your subscription plan")
+    image_used = _monthly_image_chat_usage(db, tenant.id, current_user.id)
+
+    recent = (
+        db.query(ChatMessage)
+        .filter(ChatMessage.tenant_id == tenant.id, ChatMessage.user_id == current_user.id)
+        .order_by(ChatMessage.created_at.desc())
+        .limit(6)
+        .all()
+    )
+    history = []
+    for item in reversed(recent):
+        history.append({"role": "user", "content": item.question})
+        history.append({"role": "assistant", "content": item.answer})
+
+    context = _build_chat_context(db, current_user)
+    chunks, model_used, used_fallback = stream_llm_response(
+        question=message,
+        context=context,
+        history=history,
+    )
+
+    def _sse(data: dict) -> str:
+        return f"data: {json.dumps(data)}\n\n"
+
+    def event_stream():
+        answer_parts: list[str] = []
+        nonlocal model_used, used_fallback
+        try:
+            for chunk in chunks:
+                if not chunk:
+                    continue
+                answer_parts.append(chunk)
+                yield _sse({"type": "delta", "content": chunk})
+
+            answer = "".join(answer_parts).strip()
+            if not answer:
+                raise RuntimeError("No answer returned from the chat service.")
+
+            msg = ChatMessage(
+                tenant_id=tenant.id,
+                user_id=current_user.id,
+                question=message,
+                answer=answer,
+                had_image=False,
+                llm_model=model_used,
+                prompt_tokens=None,
+                completion_tokens=None,
+            )
+            db.add(msg)
+            db.commit()
+
+            used_after = used + (0 if used_fallback else 1)
+            remaining = max(limit - used_after, 0)
+            yield _sse(
+                {
+                    "type": "done",
+                    "answer": answer,
+                    "llm_model": model_used,
+                    "remaining": remaining,
+                    "image_used_this_month": image_used,
+                    "image_monthly_limit": image_limit,
+                }
+            )
+        except Exception as exc:
+            logger.warning(
+                "Streaming chat failed for user_id=%s tenant_id=%s: %s",
+                current_user.id,
+                tenant.id,
+                exc,
+            )
+            if answer_parts:
+                yield _sse({"type": "error", "message": "Response interrupted. Please try again."})
+                return
+
+            answer = build_fallback_chat_answer(
+                question=message,
+                context=context,
+                failure_reason=str(exc),
+            )
+            model_used = "local-fallback"
+            used_fallback = True
+            for chunk in (piece for piece in answer.split(" ") if piece):
+                yield _sse({"type": "delta", "content": f"{chunk} "})
+
+            msg = ChatMessage(
+                tenant_id=tenant.id,
+                user_id=current_user.id,
+                question=message,
+                answer=answer,
+                had_image=False,
+                llm_model=model_used,
+                prompt_tokens=None,
+                completion_tokens=None,
+            )
+            db.add(msg)
+            db.commit()
+
+            yield _sse(
+                {
+                    "type": "done",
+                    "answer": answer,
+                    "llm_model": model_used,
+                    "remaining": max(limit - used, 0),
+                    "image_used_this_month": image_used,
+                    "image_monthly_limit": image_limit,
+                }
+            )
+
+    return StreamingResponse(
+        event_stream(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+        },
     )
 
 
@@ -2581,10 +2862,19 @@ def nutrition_plan_ask(
             tenant.id,
             e,
         )
-        raise HTTPException(
-            status_code=502,
-            detail="Pinecone nutrition chat is unavailable right now. Please try again in a moment.",
+        answer = build_fallback_nutrition_answer(
+            goal=payload.goal,
+            symptom_focus=payload.symptom_focus,
+            dietary_preferences=payload.dietary_preferences,
+            allergies=payload.allergies,
+            budget_level=payload.budget_level,
+            cooking_time=payload.cooking_time,
+            additional_notes=payload.additional_notes,
         )
+        model_used = "local-fallback"
+        prompt_tokens = None
+        completion_tokens = None
+        used_fallback = True
 
     if not used_fallback:
         msg = ChatMessage(
@@ -2647,10 +2937,18 @@ def medication_plan_ask(
             tenant.id,
             e,
         )
-        raise HTTPException(
-            status_code=502,
-            detail="Pinecone medication chat is unavailable right now. Please try again in a moment.",
+        answer = build_fallback_medication_answer(
+            primary_complaint=payload.primary_complaint,
+            age_range=payload.age_range,
+            risk_level=payload.risk_level,
+            allergies=payload.allergies,
+            current_medications=payload.current_medications,
+            additional_notes=payload.additional_notes,
         )
+        model_used = "local-fallback"
+        prompt_tokens = None
+        completion_tokens = None
+        used_fallback = True
 
     if not used_fallback:
         msg = ChatMessage(
@@ -2838,6 +3136,7 @@ def chatbot_ask_with_image(
         history.append({"role": "assistant", "content": item.answer})
 
     context = _build_chat_context(db, current_user)
+    used_fallback = False
     try:
         answer, model_used, prompt_tokens, completion_tokens = ask_llm(
             question=text_q,
@@ -2853,10 +3152,16 @@ def chatbot_ask_with_image(
             tenant.id,
             e,
         )
-        raise HTTPException(
-            status_code=502,
-            detail="Pinecone image chat is unavailable right now. Please try again in a moment.",
-        ) from e
+        answer = build_fallback_chat_answer(
+            question=text_q,
+            context=context,
+            image_mode=True,
+            failure_reason=str(e),
+        )
+        model_used = "local-fallback"
+        prompt_tokens = None
+        completion_tokens = None
+        used_fallback = True
 
     msg = ChatMessage(
         tenant_id=tenant.id,
@@ -2871,8 +3176,8 @@ def chatbot_ask_with_image(
     db.add(msg)
     db.commit()
 
-    used_after = used + 1
-    img_used_after = image_used + 1
+    used_after = used + (0 if used_fallback else 1)
+    img_used_after = image_used + (0 if used_fallback else 1)
     return ChatAskResponse(
         answer=answer,
         llm_model=model_used,

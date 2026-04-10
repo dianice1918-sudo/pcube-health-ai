@@ -89,8 +89,23 @@ Assert-NonPlaceholder -EnvMap $envMap -Name "JWT_SECRET"
 Assert-NonPlaceholder -EnvMap $envMap -Name "ALLOWED_HOSTS"
 Assert-NonPlaceholder -EnvMap $envMap -Name "CORS_ALLOW_ORIGINS"
 
+$jwtSecret = [string]$envMap["JWT_SECRET"]
+if ($jwtSecret.Length -lt 32) {
+  throw "JWT_SECRET must be at least 32 characters"
+}
+
 if ($envMap["ALLOWED_HOSTS"] -eq "*") {
   throw "ALLOWED_HOSTS cannot be '*' in production"
+}
+
+$allowedHosts = [string]$envMap["ALLOWED_HOSTS"]
+if ($allowedHosts -match "localhost|127\.0\.0\.1") {
+  throw "ALLOWED_HOSTS must not include localhost values in production"
+}
+
+$corsAllowOrigins = [string]$envMap["CORS_ALLOW_ORIGINS"]
+if ($corsAllowOrigins -match "localhost|127\.0\.0\.1") {
+  throw "CORS_ALLOW_ORIGINS must not include localhost values in production"
 }
 
 $enableDocs = ""
@@ -107,6 +122,25 @@ if ($envMap.ContainsKey("RUN_STARTUP_SCHEMA_PATCHES")) {
 }
 if ($runStartupSchemaPatches.ToLowerInvariant() -eq "true") {
   throw "RUN_STARTUP_SCHEMA_PATCHES should be false for production deploys that use Alembic"
+}
+
+$allowSQLiteInProduction = ""
+if ($envMap.ContainsKey("ALLOW_SQLITE_IN_PRODUCTION")) {
+  $allowSQLiteInProduction = [string]$envMap["ALLOW_SQLITE_IN_PRODUCTION"]
+}
+if ($allowSQLiteInProduction.ToLowerInvariant() -eq "true") {
+  throw "ALLOW_SQLITE_IN_PRODUCTION must remain false for production"
+}
+
+$uvicornWorkers = ""
+if ($envMap.ContainsKey("UVICORN_WORKERS")) {
+  $uvicornWorkers = [string]$envMap["UVICORN_WORKERS"]
+}
+if (-not [string]::IsNullOrWhiteSpace($uvicornWorkers)) {
+  $parsedWorkers = 0
+  if (-not [int]::TryParse($uvicornWorkers, [ref]$parsedWorkers) -or $parsedWorkers -lt 1) {
+    throw "UVICORN_WORKERS must be a positive integer"
+  }
 }
 
 $loginOtpEnabled = ""
@@ -142,6 +176,10 @@ switch ($llmProvider.ToLowerInvariant()) {
   }
 }
 
+if ($llmProvider.ToLowerInvariant() -eq "pinecone") {
+  Assert-NonPlaceholder -EnvMap $envMap -Name "OPENAI_API_KEY"
+}
+
 $fcmConfigured = Test-Configured -EnvMap $envMap -Names @("FCM_PROJECT_ID", "FCM_SERVICE_ACCOUNT_FILE")
 if ($fcmConfigured) {
   $serviceAccountPath = [string]$envMap["FCM_SERVICE_ACCOUNT_FILE"]
@@ -160,4 +198,5 @@ Write-Host "Production env validation passed for $EnvFile"
 Write-Host "Optional integration readiness:"
 Write-Host ("- Firebase push: " + ($(if ($fcmConfigured) { "configured" } else { "not configured" })))
 Write-Host ("- Wearables: " + ($(if ($wearablesConfigured) { "configured" } else { "not configured" })))
+Write-Host ("- OTP login: " + ($(if ($loginOtpEnabled.ToLowerInvariant() -eq "true") { "enabled" } else { "disabled" })))
 Write-Host "- Twilio: disabled for email-only production flow"

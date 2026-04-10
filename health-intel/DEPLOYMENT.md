@@ -130,6 +130,18 @@ Run the automated smoke test after deploy:
 scripts/smoke-test.ps1 -ApiBase https://api.yourdomain.com
 ```
 
+The smoke test now also verifies the backend-hosted frontend routes:
+- `/app/`
+- `/app/login`
+- `/app/checker`
+- `/assets/style.css`
+
+If `LOGIN_OTP_ENABLED=true`, use:
+```powershell
+scripts/smoke-test.ps1 -ApiBase https://api.yourdomain.com -SkipProtectedRoutes
+```
+That confirms health, readiness, frontend serving, signup, and OTP challenge creation. Protected API checks remain manual until you enter a real delivered verification code.
+
 Optional AI route check:
 ```powershell
 scripts/smoke-test.ps1 -ApiBase https://api.yourdomain.com -IncludeAI
@@ -139,6 +151,7 @@ For the combined deploy check:
 ```powershell
 scripts/validate-live-deploy.ps1 -ApiBase https://api.yourdomain.com -EnvFile .env.production -IncludeAI
 ```
+If OTP is enabled in `.env.production`, `validate-live-deploy.ps1` now automatically switches to the pre-auth smoke path and leaves OTP completion as a manual step.
 
 ## 7) Scaling note (important)
 - API service runs with multiple workers.
@@ -157,6 +170,7 @@ scripts/validate-live-deploy.ps1 -ApiBase https://api.yourdomain.com -EnvFile .e
 - Back up DB regularly (daily snapshot minimum).
 - Rotate secrets (`JWT_SECRET`, API keys, Twilio, SMTP, Firebase) periodically.
 - Never commit populated production `.env` files or service account JSON files.
+- If an older production account still fails login after deploy, reset the password before assuming the verifier code is broken. New signups and normalized-email auth should work with the updated backend.
 
 ## 10) Common commands
 ```bash

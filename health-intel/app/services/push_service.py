@@ -64,7 +64,12 @@ def _get_fcm_access_token_and_project() -> tuple[str, str] | None:
         return None
 
     token = getattr(creds, "token", None)
-    project_id = (os.getenv("FCM_PROJECT_ID", "") or "").strip() or getattr(creds, "project_id", None) or info.get("project_id")
+    project_id = (
+        (os.getenv("FCM_PROJECT_ID", "") or "").strip()
+        or (os.getenv("FIREBASE_PROJECT_ID", "") or "").strip()
+        or getattr(creds, "project_id", None)
+        or info.get("project_id")
+    )
     if not token or not project_id:
         return None
     return token, str(project_id)

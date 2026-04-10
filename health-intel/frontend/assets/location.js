@@ -50,6 +50,9 @@ function isLocalStaticDevPage() {
 
 function shouldUseSameOriginApi() {
   const explicit = String(localStorage.getItem(SAME_ORIGIN_API_KEY) || "").trim();
+  if (window.location.protocol !== "file:" && !isLocalhostLikeHost(window.location.hostname)) {
+    return true;
+  }
   if (explicit === "1") return !isLocalStaticDevPage();
   if (explicit === "0") return false;
   if (window.location.protocol === "file:") return false;
@@ -210,8 +213,17 @@ function shouldAutoSwitchToBackendHostedPage() {
 function backendHostedFrontendUrl(target) {
   const raw = String(target || "").trim();
   if (!raw || !API_BASE || /^(https?:|mailto:|tel:|#)/i.test(raw)) return raw;
-  const safeTarget = raw.replace(/^\/+/, "").replace(/^frontend\/assets\//i, "");
-  return `${API_BASE}/frontend/assets/${safeTarget}`;
+  const cleanTarget = raw
+    .replace(/^\/+/, "")
+    .replace(/^frontend\/assets\//i, "")
+    .replace(/^assets\//i, "");
+  const [pathname, suffix = ""] = cleanTarget.split(/([?#].*)/, 2);
+  const normalizedPath = String(pathname || "").trim();
+  const routeTarget = normalizedPath.replace(/\.html$/i, "");
+  if (!routeTarget || routeTarget === "pcube" || routeTarget === "index") {
+    return `${API_BASE}/app/${suffix}`;
+  }
+  return `${API_BASE}/app/${routeTarget}${suffix}`;
 }
 
 async function isBackendReachable(timeoutMs = 1200) {

@@ -214,6 +214,13 @@ body {
   gap: 8px;
 }
 
+.password-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
 .field-group label {
   color: #17345f;
   font-size: 0.88rem;
@@ -245,6 +252,37 @@ body {
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
   background: #fff;
   transform: translateY(-1px);
+}
+
+.password-toggle {
+  min-width: 76px;
+  min-height: 46px;
+  border-radius: 14px;
+  border: 1.4px solid #c8d8f3;
+  background: #f5f9ff;
+  color: #1d4ed8;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  border-color: #7aa8f6;
+  background: #eef4ff;
+}
+
+.password-toggle:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+.field-hint {
+  margin: 0;
+  color: #5f7394;
+  font-size: 0.83rem;
+  line-height: 1.5;
 }
 
 .auth-section .btn {
