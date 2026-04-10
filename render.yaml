@@ -1,9 +1,10 @@
+
 services:
   - type: web
     name: health-intel
     runtime: docker
-    rootDir: health-intel
-    dockerfilePath: ./Dockerfile
+    rootDir: .
+    dockerfilePath: health-intel/Dockerfile
     dockerContext: .
     healthCheckPath: /healthz
     autoDeployTrigger: commit
@@ -42,3 +43,4 @@ services:
         value: p-cube-f1f60
       - key: FCM_SERVICE_ACCOUNT_JSON
         value: REPLACE_WITH_FIREBASE_SERVICE_ACCOUNT_JSON
+
